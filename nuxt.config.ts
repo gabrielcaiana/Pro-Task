@@ -1,6 +1,9 @@
 export default defineNuxtConfig({
   app: {
     head: {
+      charset: "utf-8",
+      viewport: "initial-scale=1",
+      meta: [{ name: "description", content: "Gerenciador de tarefas" }],
       link: [{ rel: "icon", type: "image/x-svg", href: "/favicon.svg" }],
     },
   },

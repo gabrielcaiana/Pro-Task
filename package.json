@@ -2,6 +2,7 @@
   "name": "nuxt-tasks",
   "private": true,
   "type": "module",
+  "author": "gabrielcaiana",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
