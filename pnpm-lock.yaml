@@ -11,6 +11,9 @@ dependencies:
   '@nuxtjs/eslint-config-typescript':
     specifier: ^12.1.0
     version: 12.1.0(eslint@8.50.0)(typescript@5.2.2)
+  '@pinia/nuxt':
+    specifier: ^0.4.11
+    version: 0.4.11(rollup@2.79.1)(typescript@5.2.2)(vue@3.3.4)
   '@typescript-eslint/parser':
     specifier: ^6.7.3
     version: 6.7.3(eslint@8.50.0)(typescript@5.2.2)
@@ -47,6 +50,9 @@ dependencies:
   nuxt-vuefire:
     specifier: ^0.4.0
     version: 0.4.0(@firebase/app-types@0.9.0)(firebase-admin@11.11.0)(firebase-functions@4.4.1)(firebase@10.4.0)(rollup@2.79.1)(vuefire@3.1.17)
+  pinia:
+    specifier: ^2.1.6
+    version: 2.1.6(typescript@5.2.2)(vue@3.3.4)
   prettier:
     specifier: ^3.0.3
     version: 3.0.3
@@ -3213,6 +3219,19 @@ packages:
       '@parcel/watcher-win32-ia32': 2.3.0
       '@parcel/watcher-win32-x64': 2.3.0
     dev: true
+
+  /@pinia/nuxt@0.4.11(rollup@2.79.1)(typescript@5.2.2)(vue@3.3.4):
+    resolution: {integrity: sha512-bhuNFngJpmBCdAqWguezNJ/oJFR7wvKieqiZrmmdmPR07XjsidAw8RLXHMZE9kUm32M9E6T057OBbG/22jERTg==}
+    dependencies:
+      '@nuxt/kit': 3.7.4(rollup@2.79.1)
+      pinia: 2.1.6(typescript@5.2.2)(vue@3.3.4)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - rollup
+      - supports-color
+      - typescript
+      - vue
+    dev: false
 
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -9459,6 +9478,24 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pinia@2.1.6(typescript@5.2.2)(vue@3.3.4):
+    resolution: {integrity: sha512-bIU6QuE5qZviMmct5XwCesXelb5VavdOWKWaB17ggk++NUwQWWbP5YnsONTk3b752QkW9sACiR81rorpeOMSvQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      typescript: 5.2.2
+      vue: 3.3.4
+      vue-demi: 0.14.6(vue@3.3.4)
+    dev: false
 
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}

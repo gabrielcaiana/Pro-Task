@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "nuxt-vuefire",
     "nuxt-icon",
     "@vite-pwa/nuxt",
+    "@pinia/nuxt",
   ],
   vuefire: {
     config: {
@@ -48,5 +49,8 @@ export default defineNuxtConfig({
         },
       ],
     },
+  },
+  imports: {
+    dirs: ["stores"],
   },
 });

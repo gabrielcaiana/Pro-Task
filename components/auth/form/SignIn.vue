@@ -6,6 +6,8 @@ interface Model {
   password: string;
 }
 
+const router = useRouter();
+
 const model: Ref<Model> = ref({
   email: "",
   password: "",
@@ -16,7 +18,7 @@ const handleSignInProvider = (provider: string) => {
 };
 
 const handleSignInForm = () => {
-  alert(JSON.stringify(model.value));
+  router.push("/");
 };
 
 const goToRegister = () => {
