@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  layout: "auth",
+});
+</script>
 
 <template>
-  <div>Auth</div>
+  <div>
+    <nuxt-link to="/">Home</nuxt-link>
+  </div>
 </template>
