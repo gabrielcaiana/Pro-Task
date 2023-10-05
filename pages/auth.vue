@@ -2,10 +2,22 @@
 definePageMeta({
   layout: "auth",
 });
+
+const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
+
+const currentForm = ref("signIn");
+const SignIn = resolveComponent("AuthFormSignIn");
+const SignUp = resolveComponent("AuthFormSignUp");
+
+$bus.$on("auth:form", (data: { page: string }) => {
+  currentForm.value = data.page;
+});
 </script>
 
 <template>
-  <div>
-    <nuxt-link to="/">Home</nuxt-link>
-  </div>
+  <section>
+    <Transition name="layout" mode="out-in">
+      <component :is="currentForm === 'signIn' ? SignIn : SignUp" />
+    </Transition>
+  </section>
 </template>
