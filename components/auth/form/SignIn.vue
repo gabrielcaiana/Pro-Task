@@ -59,7 +59,7 @@ const goToRegister = () => {
           </button>
         </div>
 
-        <form class="space-y-4 md:space-y-6" @submit.prevent="handleSignInForm">
+        <VForm class="space-y-4 md:space-y-6" @submit="handleSignInForm">
           <div class="flex items-center gap-4">
             <div class="border-b border-1 border-neutral-300 w-full" />
             <span class="text-sm text-neutral-500">ou</span>
@@ -71,15 +71,16 @@ const goToRegister = () => {
               class="block mb-2 text-sm font-medium text-gray-900"
               >Email</label
             >
-            <input
+            <VField
               id="email"
               v-model="model.email"
               type="email"
               name="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="name@company.com"
-              required
+              rules="required|email"
             />
+            <VErrorMessage name="email" class="text-red" />
           </div>
           <div>
             <label
@@ -87,15 +88,16 @@ const goToRegister = () => {
               class="block mb-2 text-sm font-medium text-gray-900"
               >Senha</label
             >
-            <input
+            <VField
               id="password"
               v-model="model.password"
               type="password"
               name="password"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              required
+              rules="required"
             />
+            <VErrorMessage name="password" class="text-red" />
           </div>
           <div class="flex items-center justify-end">
             <nuxt-link
@@ -119,7 +121,7 @@ const goToRegister = () => {
               >Inscrever-se</nuxt-link
             >
           </p>
-        </form>
+        </VForm>
       </div>
     </div>
   </div>

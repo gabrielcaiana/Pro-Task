@@ -43,22 +43,23 @@ const goToLogin = () => {
           Inscreva-se
         </h1>
 
-        <form class="space-y-4 md:space-y-6" @submit.prevent="handleSignUp">
+        <VForm class="space-y-4 md:space-y-6" @submit="handleSignUp">
           <div>
             <label
               for="name"
               class="block mb-2 text-sm font-medium text-gray-900"
               >Nome</label
             >
-            <input
+            <VField
               id="name"
               v-model="model.name"
               type="text"
               name="name"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="John Doe"
-              required
+              rules="required"
             />
+            <VErrorMessage name="name" class="text-red" />
           </div>
           <div>
             <label
@@ -66,15 +67,16 @@ const goToLogin = () => {
               class="block mb-2 text-sm font-medium text-gray-900"
               >Email</label
             >
-            <input
+            <VField
               id="email"
               v-model="model.email"
               type="email"
               name="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="name@company.com"
-              required
+              rules="required|email"
             />
+            <VErrorMessage name="email" class="text-red" />
           </div>
           <div>
             <label
@@ -82,15 +84,16 @@ const goToLogin = () => {
               class="block mb-2 text-sm font-medium text-gray-900"
               >Senha</label
             >
-            <input
+            <VField
               id="password"
               v-model="model.password"
               type="password"
               name="password"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              required
+              rules="required|minMax:5,16"
             />
+            <VErrorMessage name="password" class="text-red" />
           </div>
           <button
             type="submit"
@@ -107,7 +110,7 @@ const goToLogin = () => {
               >Login</nuxt-link
             >
           </p>
-        </form>
+        </VForm>
       </div>
     </div>
   </div>

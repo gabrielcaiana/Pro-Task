@@ -17,6 +17,9 @@ dependencies:
   '@typescript-eslint/parser':
     specifier: ^6.7.3
     version: 6.7.3(eslint@8.50.0)(typescript@5.2.2)
+  '@vee-validate/i18n':
+    specifier: ^4.11.7
+    version: 4.11.7
   '@vee-validate/rules':
     specifier: ^4.11.7
     version: 4.11.7(vue@3.3.4)
@@ -4022,6 +4025,10 @@ packages:
       unhead: 1.7.4
       vue: 3.3.4
     dev: true
+
+  /@vee-validate/i18n@4.11.7:
+    resolution: {integrity: sha512-m648JC3fQTbKAr896UOdNbsGzqlf+F5q+7B44xl7Dd9GO9sr/+ELng00cz9sk0RU1dODoEKq4Md1mkywsTxg5w==}
+    dev: false
 
   /@vee-validate/rules@4.11.7(vue@3.3.4):
     resolution: {integrity: sha512-XPsh+5f7DZmJQAI2AhCvBeDATve+zZt0q0194p0Wwk2MeqAo+vmThduesmiiUwQw1MUebKOuZcTjtujPcfB8cg==}
