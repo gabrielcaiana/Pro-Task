@@ -6,6 +6,8 @@ export default defineNuxtConfig({
       meta: [{ name: "description", content: "Gerenciador de tarefas" }],
       link: [{ rel: "icon", type: "image/x-svg", href: "/favicon.svg" }],
     },
+    pageTransition: { name: "page", mode: "out-in" },
+    layoutTransition: { name: "layout", mode: "out-in" },
   },
   devtools: { enabled: true },
   modules: [
