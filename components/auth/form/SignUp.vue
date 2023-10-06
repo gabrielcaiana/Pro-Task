@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
-const router = useRouter();
+
+const { signUp } = useAuth();
 
 interface Model {
   name: string;
@@ -19,37 +18,7 @@ const model: Ref<Model> = ref({
 });
 
 const handleSignUp = async () => {
-  try {
-    const data = await createUserWithEmailAndPassword(
-      getAuth(),
-      model.value.email,
-      model.value.password,
-    );
-
-    if (data.user.uid) {
-      // TODO: create user in firestore
-      // TODO: create variant to toast
-      setTimeout(() => {
-        $bus.$emit("ui:toast", {
-          message: "Conta criada com sucesso!",
-          show: true,
-        });
-      }, 500);
-
-      router.push("/");
-    }
-  } catch (error: any) {
-    const parsedError = error.message.replace("Firebase: ", "");
-    const userExists = parsedError.includes("auth/email-already-in-use");
-    const message = userExists
-      ? "Este email já está em uso."
-      : "Houve um erro ao criar a conta.";
-
-    $bus.$emit("ui:toast", {
-      message,
-      show: true,
-    });
-  }
+  await signUp(model.value);
 };
 
 const goToLogin = () => {

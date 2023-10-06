@@ -1,59 +1,14 @@
 <script setup lang="ts">
-import {
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { IAuthentication } from "~/types/authentication";
 
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
 
-const router = useRouter();
+const { signIn, signInWithProvider } = useAuth();
 
-const signInWithProvider = (typeProvider: string) => {
-  const provider =
-    typeProvider === "google"
-      ? new GoogleAuthProvider()
-      : new GithubAuthProvider();
-
-  signInWithPopup(getAuth(), provider)
-    .then((result) => {
-      if (result) router.push("/");
-    })
-    .catch((error) => {
-      throw new Error(error);
-    });
-};
-
-interface Model {
-  email: string;
-  password: string;
-}
-
-const model: Ref<Model> = ref({
+const model: Ref<IAuthentication> = ref({
   email: "",
   password: "",
 });
-
-const handleSignInForm = async () => {
-  try {
-    const data = await signInWithEmailAndPassword(
-      getAuth(),
-      model.value.email,
-      model.value.password,
-    );
-
-    if (data.user) {
-      router.push("/");
-    }
-  } catch (error: any) {
-    $bus.$emit("ui:toast", {
-      message: "Houve um erro ao fazer login.",
-      show: true,
-    });
-  }
-};
 
 const goToRegister = () => {
   $bus.$emit("auth:form", { page: "signUp" });
@@ -93,7 +48,7 @@ const goToRegister = () => {
           </button>
         </div>
 
-        <VForm class="space-y-4 md:space-y-6" @submit="handleSignInForm">
+        <VForm class="space-y-4 md:space-y-6" @submit="signIn">
           <div class="flex items-center gap-4">
             <div class="border-b border-1 border-neutral-300 w-full" />
             <span class="text-sm text-neutral-500">ou</span>

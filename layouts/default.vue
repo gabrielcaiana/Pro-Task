@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { getAuth, signOut } from "firebase/auth";
-const router = useRouter();
+const { logout } = useAuth();
 
 const handleLogout = async () => {
-  await signOut(getAuth());
-  router.push("/auth");
+  await logout();
 };
 </script>
 
