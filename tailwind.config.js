@@ -37,6 +37,7 @@ export default {
           light: "#FBF1F2",
         },
         neutral: {
+          700: "#111827",
           600: "#121217",
           DEFAULT: "#787486",
           400: "#625F6D",

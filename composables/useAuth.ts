@@ -48,8 +48,18 @@ export default () => {
           ? new GoogleAuthProvider()
           : new GithubAuthProvider();
 
-      const result = await signInWithPopup(getAuth(), provider);
-      if (result) router.push("/");
+      const data = await signInWithPopup(getAuth(), provider);
+      if (data) {
+        await setDoc(doc(db, "users", data.user.uid), {
+          name: data.user.displayName,
+          email: data.user.email,
+          photoUrl: data.user.photoURL,
+          createdAt: new Date(),
+          providerId: data.user.providerData[0].providerId,
+        });
+
+        router.push("/");
+      }
     } catch (error: any) {
       const parsedError = error.message.replace("Firebase: ", "");
       const userExists = parsedError.includes(
@@ -81,6 +91,9 @@ export default () => {
         await setDoc(doc(db, "users", data.user.uid), {
           name: model.name,
           email: model.email,
+          photoUrl: data.user.photoURL,
+          createdAt: new Date(),
+          providerId: data.user.providerId,
         });
 
         // TODO: create variant to toast
