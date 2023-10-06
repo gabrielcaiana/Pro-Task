@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { doc, getFirestore } from "firebase/firestore";
+
 const { logout } = useAuth();
+
+const db = getFirestore();
+
+const user = useCurrentUser();
+const dbUser = await useDocument(doc(db, "users", `${user.value?.uid}`));
 
 const handleLogout = async () => {
   await logout();
 };
-
-const user = useCurrentUser();
 </script>
 
 <template>
@@ -16,15 +21,18 @@ const user = useCurrentUser();
       </nuxt-link>
 
       <div
-        v-if="user"
+        v-if="dbUser"
         id="dropdownDefaultButton"
         class="flex gap-4 items-center cursor-pointer"
         data-dropdown-toggle="dropdown"
       >
-        <span class="text-sm text-neutral-700">{{ user.displayName }}</span>
+        <span class="text-sm text-neutral-700">{{ dbUser.name }}</span>
         <img
           class="w-8 h-8 rounded-full"
-          :src="user.photoURL!"
+          :src="
+            dbUser.photoUrl ??
+            'https://www.pngmart.com/files/23/User-PNG-Image.png'
+          "
           alt="Rounded avatar"
         />
       </div>
