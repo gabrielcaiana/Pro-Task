@@ -2,6 +2,7 @@
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
 
 const { resetPassword } = useAuth();
+const loadingStore = useLoadingStore();
 
 const email: Ref<string> = ref("");
 
@@ -58,7 +59,12 @@ const goToLogin = () => {
             type="submit"
             class="w-full text-white bg-purple hover:brightness-125 transition-colors focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            Recuperar senha
+            <Icon
+              v-if="loadingStore.$state.isLoading"
+              name="eos-icons:bubble-loading"
+              size="16"
+            />
+            <span v-else>Recuperar senha</span>
           </button>
           <p class="text-sm font-light text-gray-500">
             Ir para pagina de

@@ -13,9 +13,11 @@ import { IAuthentication } from "~/types/authentication";
 export default () => {
   const router = useRouter();
   const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
+  const { START_LOADING, FINISH_LOADING } = useLoadingStore();
 
   const signIn = async (model: IAuthentication) => {
     try {
+      START_LOADING();
       const data = await signInWithEmailAndPassword(
         getAuth(),
         model.email,
@@ -30,26 +32,32 @@ export default () => {
         message: "Houve um erro ao fazer login.",
         show: true,
       });
+    } finally {
+      FINISH_LOADING();
     }
   };
 
-  const signInWithProvider = (typeProvider: string) => {
-    const provider =
-      typeProvider === "google"
-        ? new GoogleAuthProvider()
-        : new GithubAuthProvider();
+  const signInWithProvider = async (typeProvider: string) => {
+    try {
+      START_LOADING();
 
-    signInWithPopup(getAuth(), provider)
-      .then((result) => {
-        if (result) router.push("/");
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+      const provider =
+        typeProvider === "google"
+          ? new GoogleAuthProvider()
+          : new GithubAuthProvider();
+
+      const result = await signInWithPopup(getAuth(), provider);
+      if (result) router.push("/");
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      FINISH_LOADING();
+    }
   };
 
   const signUp = async (model: IAuthentication) => {
     try {
+      START_LOADING();
       const data = await createUserWithEmailAndPassword(
         getAuth(),
         model.email,
@@ -79,16 +87,26 @@ export default () => {
         message,
         show: true,
       });
+    } finally {
+      FINISH_LOADING();
     }
   };
 
   const logout = async () => {
-    await signOut(getAuth());
-    router.push("/auth");
+    try {
+      START_LOADING();
+      await signOut(getAuth());
+      router.push("/auth");
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      FINISH_LOADING();
+    }
   };
 
   const resetPassword = async (email: string) => {
     try {
+      START_LOADING();
       await sendPasswordResetEmail(getAuth(), email);
       $bus.$emit("auth:form", { page: "signIn" });
 
@@ -103,6 +121,8 @@ export default () => {
         message: "Houve um erro ao resetar a senha.",
         show: true,
       });
+    } finally {
+      FINISH_LOADING();
     }
   };
 

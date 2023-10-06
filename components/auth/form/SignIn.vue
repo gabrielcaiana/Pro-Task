@@ -5,6 +5,8 @@ const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
 
 const { signIn, signInWithProvider } = useAuth();
 
+const loadingStore = useLoadingStore();
+
 const model: Ref<IAuthentication> = ref({
   email: "",
   password: "",
@@ -104,7 +106,12 @@ const goToForgotPassword = () => {
             type="submit"
             class="w-full text-white bg-purple hover:brightness-125 transition-colors focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            Entrar
+            <Icon
+              v-if="loadingStore.$state.isLoading"
+              name="eos-icons:bubble-loading"
+              size="16"
+            />
+            <span v-else>Entrar</span>
           </button>
           <p class="text-sm font-light text-gray-500">
             Ainda não tem uma conta?
