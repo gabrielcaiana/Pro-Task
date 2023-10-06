@@ -41,17 +41,12 @@ const user = useCurrentUser();
           <li>
             <a
               href="#"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >Perfil</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white gap-1"
               @click="handleLogout"
-              >Sair</a
             >
+              <Icon name="tabler:logout" size="16" />
+              Sair
+            </a>
           </li>
         </ul>
       </div>

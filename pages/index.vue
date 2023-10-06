@@ -1,15 +1,17 @@
 <script setup lang="ts">
+import { initFlowbite } from "flowbite";
+
 definePageMeta({
   middleware: ["auth"],
 });
 
-const user = useCurrentUser();
+onMounted(() => {
+  setTimeout(() => {
+    initFlowbite();
+  }, 1000);
+});
 </script>
 
 <template>
-  <div class="mx-auto max-w-[1093px] h-screen">
-    <pre>
-      {{ user }}
-    </pre>
-  </div>
+  <div></div>
 </template>
