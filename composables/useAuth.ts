@@ -49,7 +49,18 @@ export default () => {
       const result = await signInWithPopup(getAuth(), provider);
       if (result) router.push("/");
     } catch (error: any) {
-      throw new Error(error);
+      const parsedError = error.message.replace("Firebase: ", "");
+      const userExists = parsedError.includes(
+        "auth/account-exists-with-different-credential",
+      );
+      const message = userExists
+        ? "Este email já está em uso."
+        : "Houve um erro ao criar a conta.";
+
+      $bus.$emit("ui:toast", {
+        message,
+        show: true,
+      });
     } finally {
       FINISH_LOADING();
     }
