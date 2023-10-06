@@ -13,6 +13,10 @@ const model: Ref<IAuthentication> = ref({
 const goToRegister = () => {
   $bus.$emit("auth:form", { page: "signUp" });
 };
+
+const goToForgotPassword = () => {
+  $bus.$emit("auth:form", { page: "forgotPassword" });
+};
 </script>
 
 <template>
@@ -66,7 +70,7 @@ const goToRegister = () => {
               type="email"
               name="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="name@company.com"
+              placeholder="johndoe@email.com"
               rules="required|email"
             />
             <VErrorMessage name="email" class="text-red" />
@@ -88,6 +92,14 @@ const goToRegister = () => {
             />
             <VErrorMessage name="password" class="text-red" />
           </div>
+          <p class="text-sm font-light text-gray-500 text-end">
+            <nuxt-link
+              to="/auth"
+              class="font-medium text-primary-600 hover:underline"
+              @click="goToForgotPassword"
+              >Recuperar senha</nuxt-link
+            >
+          </p>
           <button
             type="submit"
             class="w-full text-white bg-purple hover:brightness-125 transition-colors focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"

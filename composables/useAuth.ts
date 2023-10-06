@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { IAuthentication } from "~/types/authentication";
 
@@ -86,10 +87,30 @@ export default () => {
     router.push("/auth");
   };
 
+  const resetPassword = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(getAuth(), email);
+      $bus.$emit("auth:form", { page: "signIn" });
+
+      setTimeout(() => {
+        $bus.$emit("ui:toast", {
+          message: "Email enviado com sucesso!",
+          show: true,
+        });
+      }, 500);
+    } catch (error) {
+      $bus.$emit("ui:toast", {
+        message: "Houve um erro ao resetar a senha.",
+        show: true,
+      });
+    }
+  };
+
   return {
     signIn,
     signInWithProvider,
     signUp,
     logout,
+    resetPassword,
   };
 };
