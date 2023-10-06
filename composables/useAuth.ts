@@ -8,9 +8,11 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { IAuthentication } from "~/types/authentication";
 
 export default () => {
+  const db = getFirestore();
   const router = useRouter();
   const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
@@ -76,7 +78,11 @@ export default () => {
       );
 
       if (data.user.uid) {
-        // TODO: create user in firestore
+        await setDoc(doc(db, "users", data.user.uid), {
+          name: model.name,
+          email: model.email,
+        });
+
         // TODO: create variant to toast
         setTimeout(() => {
           $bus.$emit("ui:toast", {
