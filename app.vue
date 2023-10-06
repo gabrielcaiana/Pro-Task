@@ -18,6 +18,7 @@ onMounted(() => {
   <NuxtLayout>
     <NuxtLoadingIndicator />
     <NuxtPage />
+    <UiToast />
   </NuxtLayout>
 </template>
 

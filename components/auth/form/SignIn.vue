@@ -1,24 +1,58 @@
 <script setup lang="ts">
+import {
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
+
+const router = useRouter();
+
+const signInWithProvider = (typeProvider: string) => {
+  const provider =
+    typeProvider === "google"
+      ? new GoogleAuthProvider()
+      : new GithubAuthProvider();
+
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      if (result) router.push("/");
+    })
+    .catch((error) => {
+      throw new Error(error);
+    });
+};
 
 interface Model {
   email: string;
   password: string;
 }
 
-const router = useRouter();
-
 const model: Ref<Model> = ref({
   email: "",
   password: "",
 });
 
-const handleSignInProvider = (provider: string) => {
-  alert(provider);
-};
+const handleSignInForm = async () => {
+  try {
+    const data = await signInWithEmailAndPassword(
+      getAuth(),
+      model.value.email,
+      model.value.password,
+    );
 
-const handleSignInForm = () => {
-  router.push("/");
+    if (data.user) {
+      router.push("/");
+    }
+  } catch (error: any) {
+    $bus.$emit("ui:toast", {
+      message: "Houve um erro ao fazer login.",
+      show: true,
+    });
+  }
 };
 
 const goToRegister = () => {
@@ -45,14 +79,14 @@ const goToRegister = () => {
         <div class="flex flex-col gap-2">
           <button
             class="w-full text-neutral border border-neutral-300 hover:bg-neutral-200 transition-colors focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center align-center gap-2"
-            @click="handleSignInProvider('google')"
+            @click="signInWithProvider('google')"
           >
             <Icon name="logos:google-icon" size="24" />
             Login com o Google
           </button>
           <button
             class="w-full text-neutral border border-neutral-300 hover:bg-neutral-200 transition-colors focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center align-center gap-2"
-            @click="handleSignInProvider('github')"
+            @click="signInWithProvider('github')"
           >
             <Icon name="logos:github-icon" size="24" />
             Login com o Github

@@ -1,20 +1,55 @@
 <script setup lang="ts">
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
+const router = useRouter();
 
 interface Model {
   name: string;
   email: string;
   password: string;
+  repeatPassword: string;
 }
 
 const model: Ref<Model> = ref({
   name: "",
   email: "",
   password: "",
+  repeatPassword: "",
 });
 
-const handleSignUp = () => {
-  alert(JSON.stringify(model.value));
+const handleSignUp = async () => {
+  try {
+    const data = await createUserWithEmailAndPassword(
+      getAuth(),
+      model.value.email,
+      model.value.password,
+    );
+
+    if (data.user.uid) {
+      // TODO: create user in firestore
+      // TODO: create variant to toast
+      setTimeout(() => {
+        $bus.$emit("ui:toast", {
+          message: "Conta criada com sucesso!",
+          show: true,
+        });
+      }, 500);
+
+      router.push("/");
+    }
+  } catch (error: any) {
+    const parsedError = error.message.replace("Firebase: ", "");
+    const userExists = parsedError.includes("auth/email-already-in-use");
+    const message = userExists
+      ? "Este email já está em uso."
+      : "Houve um erro ao criar a conta.";
+
+    $bus.$emit("ui:toast", {
+      message,
+      show: true,
+    });
+  }
 };
 
 const goToLogin = () => {
@@ -94,6 +129,23 @@ const goToLogin = () => {
               rules="required|minMax:5,16"
             />
             <VErrorMessage name="password" class="text-red" />
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Confirmar senha</label
+            >
+            <VField
+              id="password"
+              v-model="model.repeatPassword"
+              type="password"
+              name="repeatPassword"
+              placeholder="Confirmar senha"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              rules="required|minMax:5,16|confirmed:password"
+            />
+            <VErrorMessage name="repeatPassword" class="text-red" />
           </div>
           <button
             type="submit"

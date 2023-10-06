@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "auth",
+  middleware: "guest",
 });
 
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };

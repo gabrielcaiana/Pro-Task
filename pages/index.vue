@@ -1,5 +1,15 @@
-<template>
-  <div class="mx-auto max-w-[1093px] h-screen">Home</div>
-</template>
+<script setup lang="ts">
+definePageMeta({
+  middleware: ["auth"],
+});
 
-<script setup lang="ts"></script>
+const user = useCurrentUser();
+</script>
+
+<template>
+  <div class="mx-auto max-w-[1093px] h-screen">
+    <pre>
+      {{ user }}
+    </pre>
+  </div>
+</template>
