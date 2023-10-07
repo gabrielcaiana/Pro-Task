@@ -50,7 +50,7 @@ onMounted(() => {
       v-model="columns"
       group="columns"
       item-key="id"
-      class="flex gap-4 items-start"
+      class="flex gap-4 items-stretch"
       :animation="150"
       handle=".drag-handle"
     >
