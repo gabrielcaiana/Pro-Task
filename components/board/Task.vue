@@ -77,7 +77,7 @@ onMounted(() => {
       <main class="flex flex-col w-full">
         <input class="text-neutral-800" :value="task.title" />
         <textarea
-          class="border-none resize-none text-xs text-neutral p-0 mt-[6px]"
+          class="border-none resize-none text-xs text-neutral p-0 mt-[6px] focus:ring-0"
           placeholder="Descrição da tarefa"
           value=""
         />
