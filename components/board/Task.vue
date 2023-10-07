@@ -92,11 +92,12 @@ onMounted(() => {
           />
         </div>
 
-        <div class="flex items-center gap-1">
-          <!-- TODO: change file icon-->
+        <!-- TODO: change file icon-->
+        <!-- TODO: check if this exists -->
+        <!-- <div class="flex items-center gap-1">
           <Icon name="tabler:file-horizontal" class="text-neutral" />
           <span class="text-xs text-neutral">10 arquivos</span>
-        </div>
+        </div> -->
       </footer>
     </div>
   </div>

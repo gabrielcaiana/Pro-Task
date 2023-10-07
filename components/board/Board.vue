@@ -2,36 +2,14 @@
 import draggable from "vuedraggable";
 import { initFlowbite } from "flowbite";
 
-const columns = ref([
-  {
-    id: "1",
-    title: "A fazer",
-    type: "todo",
-    theme: "purple",
-    tasks: [],
-  },
-  {
-    id: "2",
-    title: "Em andamento",
-    type: "doing",
-    theme: "orange",
-    tasks: [],
-  },
-  {
-    id: "3",
-    title: "Feito",
-    type: "done",
-    theme: "blue",
-    tasks: [],
-  },
-]);
+const boardStore = useBoardStore();
 
 const alt = useKeyModifier("Alt");
 
 const showNewTask: Ref<boolean> = ref(false);
 
 const deleteTask = (id: string): void => {
-  columns.value.forEach((column: any) => {
+  boardStore.$state.board?.forEach((column: any) => {
     const taskIndex = column.tasks.findIndex((task: any) => task.id === id);
     if (taskIndex !== -1) {
       column.tasks.splice(taskIndex, 1);
@@ -45,9 +23,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex items-start gap-4 overflow-x-auto">
+  <div
+    v-if="boardStore.$state.board"
+    class="flex items-start gap-4 overflow-x-auto"
+  >
     <draggable
-      v-model="columns"
+      v-model="boardStore.$state.board"
       group="columns"
       item-key="id"
       class="flex gap-4 items-stretch"
