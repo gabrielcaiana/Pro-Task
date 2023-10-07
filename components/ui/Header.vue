@@ -22,7 +22,7 @@ const handleLogout = async () => {
                 class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
               >
                 <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  class="w-4 h-4 text-gray-500"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -40,7 +40,7 @@ const handleLogout = async () => {
               <input
                 id="default-search"
                 type="search"
-                class="block w-full p-4 pl-10 h-[38px] text-sm text-gray-900 border-none rounded-[6px] bg-gray-200 focus:ring-blue-500 focus:border-blue-500 placeholder:text-neutral"
+                class="block w-full p-4 pl-10 h-[38px] text-sm text-gray-900 border-none rounded-[6px] bg-neutral-200 focus:ring-blue-500 focus:border-blue-500 placeholder:text-neutral"
                 placeholder="Buscar por uma tarefa."
                 required
               />
