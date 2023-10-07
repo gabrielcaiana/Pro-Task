@@ -3,3 +3,12 @@ export interface IAuthentication {
   email: string;
   password: string;
 }
+
+export interface IUser {
+  name: string;
+  createdAt?: Date;
+  email: string;
+  photoUrl: string;
+  providerId: string;
+  id: string;
+}

@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@vite-pwa/nuxt",
     "@pinia/nuxt",
+    "@vueuse/nuxt",
   ],
   vuefire: {
     auth: {

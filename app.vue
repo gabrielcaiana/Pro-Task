@@ -5,6 +5,10 @@ useHead({
     lang: "pt-br",
   },
 });
+
+const { getDbUser } = useAuth();
+
+onMounted(() => nextTick(async () => await getDbUser()));
 </script>
 
 <template>

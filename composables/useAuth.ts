@@ -8,14 +8,17 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
-import { IAuthentication } from "~/types/authentication";
+import { doc, setDoc, getFirestore, getDoc } from "firebase/firestore";
+import { useUserStore } from "~/stores/user";
+import { IAuthentication, IUser } from "~/types/authentication";
 
 export default () => {
+  const user = useCurrentUser();
   const db = getFirestore();
   const router = useRouter();
   const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
+  const { SET_USER } = useUserStore();
 
   const signIn = async (model: IAuthentication) => {
     try {
@@ -27,6 +30,7 @@ export default () => {
       );
 
       if (data.user) {
+        await getDbUser();
         router.push("/");
       }
     } catch (error: any) {
@@ -57,6 +61,8 @@ export default () => {
           createdAt: new Date(),
           providerId: data.user.providerData[0].providerId,
         });
+
+        await getDbUser();
 
         router.push("/");
       }
@@ -156,11 +162,31 @@ export default () => {
     }
   };
 
+  const getDbUser = async () => {
+    try {
+      START_LOADING();
+      const userDocRef = doc(db, "users", String(user.value?.uid));
+      const userDocSnapshot = await getDoc(userDocRef);
+
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        SET_USER(userData as IUser);
+      } else {
+        throw new Error("Usuário não encontrado");
+      }
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      FINISH_LOADING();
+    }
+  };
+
   return {
     signIn,
     signInWithProvider,
     signUp,
     logout,
     resetPassword,
+    getDbUser,
   };
 };
