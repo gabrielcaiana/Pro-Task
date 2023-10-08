@@ -2,6 +2,7 @@
 import { nanoid } from "nanoid";
 
 import { ref } from "vue";
+import { ITask } from "~/types/board";
 
 const emit = defineEmits<{
   (e: "add", payload: any): void;
@@ -22,7 +23,9 @@ const createTask = (e: Event) => {
     id: nanoid(),
     title: taskTitle,
     createdAt: new Date(),
-  } as any);
+    description: "",
+    tag: "",
+  } as ITask);
 
   title.value = "";
 

@@ -2,13 +2,15 @@
 import { ref } from "vue";
 import { onKeyStroke } from "@vueuse/core";
 import { initFlowbite } from "flowbite";
+import { ITask } from "~/types/board";
 
 const props = defineProps<{
-  task: any;
+  task: ITask;
 }>();
 
 const emit = defineEmits<{
   (e: "delete", payload: any): void;
+  (e: "updated"): void;
 }>();
 
 const userStore = useUserStore();
@@ -75,11 +77,19 @@ onMounted(() => {
       </header>
 
       <main class="flex flex-col w-full">
-        <input class="text-neutral-800" :value="task.title" />
         <textarea
-          class="border-none resize-none text-xs text-neutral p-0 mt-[6px] focus:ring-0"
-          placeholder="Descrição da tarefa"
-          value=""
+          class="text-neutral-800 text-lg border-none resize-none p-0 focus:ring-0 max-w-[300px] h-[2rem] max-h-[9rem]"
+          :value="task.title"
+          rows="3"
+          @change="emit('updated')"
+        />
+
+        <textarea
+          class="border-none resize-none text-xs text-neutral p-0 focus:ring-0 h-[3rem] max-h-[9rem]"
+          placeholder="Adicione uma descrição+ "
+          :value="task.description"
+          rows="3"
+          @change="emit('updated')"
         />
       </main>
 

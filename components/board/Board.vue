@@ -9,27 +9,19 @@ const alt = useKeyModifier("Alt");
 
 const showNewTask: Ref<boolean> = ref(false);
 
-watch(
-  () => boardStore.$state.selectedBoard?.columns.map((column) => column.tasks),
-  (value) => {
-    if (value && boardStore.$state.selectedBoard?.id) {
-      updateBoard(
-        boardStore.$state.selectedBoard.id,
-        boardStore.$state.selectedBoard,
-      );
-    }
-  },
-);
+const debouncedFn = useDebounceFn((method) => {
+  method();
+}, 1000);
 
-const endNewTask = (): void => {
-  if (!boardStore.$state.selectedBoard) return;
+const changedBoard = () => {
+  if (boardStore.$state.selectedBoard) {
+    updateBoard(
+      String(boardStore.$state.selectedBoard.id),
+      boardStore.$state.selectedBoard,
+    );
 
-  updateBoard(
-    boardStore.$state.selectedBoard.id,
-    boardStore.$state.selectedBoard,
-  );
-
-  showNewTask.value = false;
+    showNewTask.value = false;
+  }
 };
 
 const deleteTask = (id: string): void => {
@@ -58,6 +50,7 @@ onMounted(() => {
       class="flex gap-4 items-stretch"
       :animation="150"
       handle=".drag-handle"
+      @update="debouncedFn(changedBoard)"
     >
       <template #item="{ element: column }: { element: any }">
         <div
@@ -104,6 +97,8 @@ onMounted(() => {
             item-key="id"
             :animation="150"
             handle=".drag-handle"
+            @update="debouncedFn(changedBoard)"
+            @add="debouncedFn(changedBoard)"
           >
             <template #item="{ element: task }: { element: any }">
               <div>
@@ -111,12 +106,16 @@ onMounted(() => {
                   class="task"
                   :task="task"
                   @delete="deleteTask($event)"
+                  @change="debouncedFn(changedBoard)"
                 />
               </div>
             </template>
           </draggable>
           <footer v-if="column.type === 'todo' && showNewTask">
-            <BoardNewTask @add="column.tasks.push($event)" @end="endNewTask" />
+            <BoardNewTask
+              @add="column.tasks.push($event)"
+              @end="debouncedFn(changedBoard)"
+            />
           </footer>
         </div>
       </template>

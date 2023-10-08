@@ -2,6 +2,8 @@ export interface ITask {
   createdAt: Date;
   id: string;
   title: string;
+  description: string;
+  tag: string;
 }
 
 export interface IColumn {
@@ -13,7 +15,7 @@ export interface IColumn {
 }
 
 export interface IBoard {
-  id: string;
+  id?: string;
   title: string;
   columns: IColumn[];
 }

@@ -6,6 +6,7 @@ import {
   query,
   where,
   updateDoc,
+  doc,
   getDoc,
 } from "firebase/firestore";
 import { IBoard } from "~/types/board";
@@ -19,26 +20,23 @@ export default () => {
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
 
   const createBoard = async (title: string) => {
-    const boardData = {
-      id: Math.random().toString(36).substring(2, 11),
-      title,
-      columns,
-    } as IBoard;
-
     try {
       START_LOADING();
-      await addDoc(collection(db, "boards"), {
-        ...boardData,
+      const boardData = {
+        title,
+        columns,
         userId: user.value?.uid,
-      });
+      } as IBoard;
+
+      const boardRef = await addDoc(collection(db, "boards"), boardData);
 
       $bus.$emit("ui:toast", {
         message: "Board criado com sucesso!",
         show: true,
       });
 
-      // TODO: check if this is the best way to do this
-      await getBoards(user.value?.uid as string);
+      SET_BOARDS([{ ...boardData, id: boardRef.id }]);
+      SET_SELECTED_BOARD({ ...boardData, id: boardRef.id });
     } catch (error: any) {
       $bus.$emit("ui:toast", {
         message: "Erro ao criar board",
@@ -55,14 +53,13 @@ export default () => {
     try {
       START_LOADING();
       const boardsCollectionRef = collection(db, "boards");
-      const querySnapshot = await getDocs(
-        query(boardsCollectionRef, where("userId", "==", userId)),
-      );
+      const q = query(boardsCollectionRef, where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
 
       const boards: any = [];
       querySnapshot.forEach((doc) => {
         const boardData = doc.data();
-        boards.push(boardData);
+        boards.push({ ...boardData, id: doc.id });
       });
 
       SET_BOARDS(boards);
@@ -76,29 +73,22 @@ export default () => {
 
   const updateBoard = async (boardId: string, updatedData: Partial<IBoard>) => {
     try {
-      const boardsCollectionRef = collection(db, "boards");
-      const querySnapshot = await getDocs(boardsCollectionRef);
+      const boardRef = doc(db, "boards", boardId);
+      const boardDoc = await getDoc(boardRef);
 
-      let boardDocRef = null;
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.id === boardId) {
-          boardDocRef = doc.ref;
-        }
-      });
-
-      if (!boardDocRef) {
+      if (!boardDoc.exists()) {
         throw new Error("Board não encontrado");
       }
 
-      const boardDoc = await getDoc(boardDocRef);
+      const currentData = boardDoc.data();
       const mergedData = {
-        ...boardDoc.data,
+        ...currentData,
         ...updatedData,
       };
 
-      await updateDoc(boardDocRef, mergedData);
+      await updateDoc(boardRef, mergedData);
+
+      console.info("updated");
 
       SET_SELECTED_BOARD(mergedData as IBoard);
     } catch (error: any) {

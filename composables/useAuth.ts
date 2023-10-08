@@ -165,6 +165,8 @@ export default () => {
   };
 
   const getDbUser = async () => {
+    if (!user.value?.uid) return;
+
     try {
       START_LOADING();
       const userDocRef = doc(db, "users", String(user.value?.uid));
