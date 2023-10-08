@@ -17,7 +17,7 @@ const colorClass = computed(() => {
 
 <template>
   <Icon
-    class="drag-handle cursor-move text-orange"
+    class="drag-handle cursor-move"
     :class="colorClass"
     name="tabler:circle-filled"
     size="8"
