@@ -2,7 +2,8 @@
 import { ref } from "vue";
 import { onKeyStroke } from "@vueuse/core";
 import { initFlowbite } from "flowbite";
-import { ITask } from "~/types/board";
+import { ITag, ITask } from "~/types/board";
+import { tags } from "~/constants/tags";
 
 const props = defineProps<{
   task: ITask;
@@ -25,9 +26,24 @@ onKeyStroke("Backspace", (_e) => {
   if (focused.value) emit("delete", props.task.id);
 });
 
+const changeTag = (tag: ITag) => {
+  model.value = {
+    ...model.value,
+    tag: tag.title,
+  };
+
+  currentTag.value = tag;
+
+  emit("updated", model.value);
+};
+
 const deleteTask = () => {
   emit("delete", props.task.id);
 };
+
+const currentTag: Ref<ITag> = ref(
+  tags.find((tag) => tag.title === props.task.tag) ?? tags[0],
+);
 
 onMounted(() => {
   initFlowbite();
@@ -43,19 +59,35 @@ onMounted(() => {
       @blur="focused = false"
     >
       <header class="flex items-center justify-between mb-2">
-        <div data-tooltip-target="tooltip-tag" data-tooltip-placement="bottom">
+        <div :data-dropdown-toggle="`dropdown-tabs-${task.id}`">
           <span
-            class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
-            >Baixa</span
+            class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded cursor-pointer"
+            :class="currentTag.color"
+            >{{ currentTag.title }}</span
           >
 
           <div
-            id="tooltip-tag"
-            role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-neutral-700 bg-neutral-100 rounded-[9px] shadow-sm opacity-0 tooltip border border-neutral-350"
+            :id="`dropdown-tabs-${task.id}`"
+            class="z-10 hidden divide-y divide-gray-100 rounded-lg w-44 bg-transparent"
           >
-            Alterar tag
-            <div class="tooltip-arrow" data-popper-arrow></div>
+            <ul
+              class="py-2 text-sm text-gray-700 flex flex-col gap-2 justify-center items-center"
+              aria-labelledby="dropdownDefaultTags"
+            >
+              <li
+                v-for="(t, index) in tags"
+                :key="index"
+                class="cursor-pointer shadow-lg"
+                :data-dropdown-toggle="`dropdown-tabs-${task.id}`"
+              >
+                <span
+                  class="text-xs font-medium px-2.5 py-0.5 rounded"
+                  :class="t.color"
+                  @click="changeTag(t)"
+                  >{{ t.title }}</span
+                >
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -104,7 +136,7 @@ onMounted(() => {
           data-tooltip-placement="bottom"
         >
           <img
-            class="w-6 h-6 border-2 border-white rounded-full dark:border-gray-800"
+            class="w-6 h-6 border-2 border-white rounded-full"
             :src="
               userStore.$state.user.photoUrl ??
               'https://www.pngmart.com/files/23/User-PNG-Image.png'

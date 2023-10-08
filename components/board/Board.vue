@@ -59,8 +59,9 @@ onMounted(() => {
 <template>
   <div
     v-if="boardStore.$state.selectedBoard"
-    class="flex items-start gap-4 overflow-x-auto mb-10"
+    class="flex flex-col items-start gap-4 overflow-x-auto mb-10"
   >
+    <BoardFilters />
     <draggable
       v-model="boardStore.$state.selectedBoard.columns"
       group="columns"

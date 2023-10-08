@@ -19,3 +19,8 @@ export interface IBoard {
   title: string;
   columns: IColumn[];
 }
+
+export interface ITag {
+  title: string;
+  color: string;
+}

@@ -71,6 +71,31 @@ export default () => {
     }
   };
 
+  const getBoardById = async (boardId: string) => {
+    try {
+      START_LOADING();
+      const boardRef = doc(db, "boards", boardId);
+      const boardDoc = await getDoc(boardRef);
+
+      if (!boardDoc.exists()) {
+        throw new Error("Board não encontrado");
+      }
+
+      const boardData = boardDoc.data();
+
+      SET_SELECTED_BOARD(boardData as IBoard);
+    } catch (error: any) {
+      $bus.$emit("ui:toast", {
+        message: "Erro ao buscar board",
+        show: true,
+      });
+
+      throw new Error(error);
+    } finally {
+      FINISH_LOADING();
+    }
+  };
+
   const updateBoard = async (boardId: string, updatedData: Partial<IBoard>) => {
     try {
       const boardRef = doc(db, "boards", boardId);
@@ -102,6 +127,7 @@ export default () => {
   return {
     createBoard,
     getBoards,
+    getBoardById,
     updateBoard,
   };
 };
