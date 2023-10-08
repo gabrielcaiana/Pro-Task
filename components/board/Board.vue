@@ -3,10 +3,34 @@ import draggable from "vuedraggable";
 import { initFlowbite } from "flowbite";
 
 const boardStore = useBoardStore();
+const { updateBoard } = useBoard();
 
 const alt = useKeyModifier("Alt");
 
 const showNewTask: Ref<boolean> = ref(false);
+
+watch(
+  () => boardStore.$state.selectedBoard?.columns.map((column) => column.tasks),
+  (value) => {
+    if (value && boardStore.$state.selectedBoard?.id) {
+      updateBoard(
+        boardStore.$state.selectedBoard.id,
+        boardStore.$state.selectedBoard,
+      );
+    }
+  },
+);
+
+const endNewTask = (): void => {
+  if (!boardStore.$state.selectedBoard) return;
+
+  updateBoard(
+    boardStore.$state.selectedBoard.id,
+    boardStore.$state.selectedBoard,
+  );
+
+  showNewTask.value = false;
+};
 
 const deleteTask = (id: string): void => {
   boardStore.$state.selectedBoard?.columns.forEach((column: any) => {
@@ -92,10 +116,7 @@ onMounted(() => {
             </template>
           </draggable>
           <footer v-if="column.type === 'todo' && showNewTask">
-            <BoardNewTask
-              @add="column.tasks.push($event)"
-              @end="showNewTask = false"
-            />
+            <BoardNewTask @add="column.tasks.push($event)" @end="endNewTask" />
           </footer>
         </div>
       </template>

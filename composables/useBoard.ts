@@ -5,6 +5,8 @@ import {
   getDocs,
   query,
   where,
+  updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { IBoard } from "~/types/board";
 import { columns } from "~/constants/columns";
@@ -72,8 +74,46 @@ export default () => {
     }
   };
 
+  const updateBoard = async (boardId: string, updatedData: Partial<IBoard>) => {
+    try {
+      const boardsCollectionRef = collection(db, "boards");
+      const querySnapshot = await getDocs(boardsCollectionRef);
+
+      let boardDocRef = null;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.id === boardId) {
+          boardDocRef = doc.ref;
+        }
+      });
+
+      if (!boardDocRef) {
+        throw new Error("Board não encontrado");
+      }
+
+      const boardDoc = await getDoc(boardDocRef);
+      const mergedData = {
+        ...boardDoc.data,
+        ...updatedData,
+      };
+
+      await updateDoc(boardDocRef, mergedData);
+
+      SET_SELECTED_BOARD(mergedData as IBoard);
+    } catch (error: any) {
+      $bus.$emit("ui:toast", {
+        message: "Erro ao atualizar o board",
+        show: true,
+      });
+
+      throw new Error(error);
+    }
+  };
+
   return {
     createBoard,
     getBoards,
+    updateBoard,
   };
 };

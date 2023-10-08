@@ -84,12 +84,28 @@ onMounted(() => {
       </main>
 
       <footer class="flex justify-between items-center">
-        <div class="flex gap-2 -space-x-4">
+        <div
+          class="flex gap-2 -space-x-4 cursor-pointer"
+          data-tooltip-target="tooltip-accountable"
+          data-tooltip-placement="bottom"
+        >
           <img
             class="w-6 h-6 border-2 border-white rounded-full dark:border-gray-800"
-            :src="userStore.$state.user.photoUrl"
+            :src="
+              userStore.$state.user.photoUrl ??
+              'https://www.pngmart.com/files/23/User-PNG-Image.png'
+            "
             :alt="userStore.$state.user.name"
           />
+
+          <div
+            id="tooltip-accountable"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-neutral-700 bg-neutral-100 rounded-[9px] shadow-sm opacity-0 tooltip border border-neutral-350"
+          >
+            {{ userStore.$state.user.name }}
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
         </div>
 
         <!-- TODO: change file icon-->
