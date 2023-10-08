@@ -7,6 +7,7 @@ import { ITask } from "~/types/board";
 const emit = defineEmits<{
   (e: "add", payload: any): void;
   (e: "end", payload: any): void;
+  (e: "hidden", payload: any): void;
 }>();
 
 const focused = ref(false);
@@ -30,6 +31,7 @@ const createTask = (e: Event) => {
   title.value = "";
 
   emit("end", null);
+  emit("hidden", null);
 };
 </script>
 

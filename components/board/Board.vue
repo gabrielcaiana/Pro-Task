@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { initFlowbite } from "flowbite";
+import { IBoard, IColumn, ITask } from "~/types/board";
 
 const boardStore = useBoardStore();
 const { updateBoard } = useBoard();
@@ -9,18 +10,34 @@ const alt = useKeyModifier("Alt");
 
 const showNewTask: Ref<boolean> = ref(false);
 
-const debouncedFn = useDebounceFn((method) => {
-  method();
-}, 1000);
+const debouncedFn = useDebounceFn((func) => func(), 1000);
 
-const changedBoard = () => {
+const changedBoard = (task: ITask | null = null) => {
   if (boardStore.$state.selectedBoard) {
-    updateBoard(
-      String(boardStore.$state.selectedBoard.id),
-      boardStore.$state.selectedBoard,
-    );
+    let payload: IBoard = boardStore.$state.selectedBoard;
 
-    showNewTask.value = false;
+    if (task) {
+      const newTasks = boardStore.$state.selectedBoard?.columns.map(
+        (column: IColumn) => {
+          return {
+            ...column,
+            tasks: column.tasks.map((t: ITask) => {
+              if (t.id === task.id) {
+                return task;
+              }
+              return t;
+            }),
+          };
+        },
+      );
+
+      payload = {
+        ...boardStore.$state.selectedBoard,
+        columns: newTasks,
+      };
+    }
+
+    updateBoard(String(boardStore.$state.selectedBoard.id), payload);
   }
 };
 
@@ -29,6 +46,7 @@ const deleteTask = (id: string): void => {
     const taskIndex = column.tasks.findIndex((task: any) => task.id === id);
     if (taskIndex !== -1) {
       column.tasks.splice(taskIndex, 1);
+      debouncedFn(changedBoard);
     }
   });
 };
@@ -41,7 +59,7 @@ onMounted(() => {
 <template>
   <div
     v-if="boardStore.$state.selectedBoard"
-    class="flex items-start gap-4 overflow-x-auto"
+    class="flex items-start gap-4 overflow-x-auto mb-10"
   >
     <draggable
       v-model="boardStore.$state.selectedBoard.columns"
@@ -87,10 +105,20 @@ onMounted(() => {
               </div>
             </div>
           </header>
+
           <div
             class="w-full h-[3px] mt-[24px] mb-[28px]"
             :class="`bg-${column.theme}`"
           />
+
+          <div v-if="column.type === 'todo' && showNewTask">
+            <BoardNewTask
+              @add="column.tasks.push($event)"
+              @end="debouncedFn(changedBoard)"
+              @hidden="showNewTask = !showNewTask"
+            />
+          </div>
+
           <draggable
             v-model="column.tasks"
             :group="{ name: ' tasks', pull: alt ? 'clone' : true }"
@@ -106,17 +134,11 @@ onMounted(() => {
                   class="task"
                   :task="task"
                   @delete="deleteTask($event)"
-                  @change="debouncedFn(changedBoard)"
+                  @updated="changedBoard($event)"
                 />
               </div>
             </template>
           </draggable>
-          <footer v-if="column.type === 'todo' && showNewTask">
-            <BoardNewTask
-              @add="column.tasks.push($event)"
-              @end="debouncedFn(changedBoard)"
-            />
-          </footer>
         </div>
       </template>
     </draggable>

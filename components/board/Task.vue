@@ -9,13 +9,17 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "delete", payload: any): void;
-  (e: "updated"): void;
+  (e: "delete", id: string): void;
+  (e: "updated", task: ITask): void;
 }>();
 
 const userStore = useUserStore();
 
 const focused = ref(false);
+
+const model: Ref<ITask> = ref({
+  ...props.task,
+});
 
 onKeyStroke("Backspace", (_e) => {
   if (focused.value) emit("delete", props.task.id);
@@ -78,18 +82,18 @@ onMounted(() => {
 
       <main class="flex flex-col w-full">
         <textarea
+          v-model="model.title"
           class="text-neutral-800 text-lg border-none resize-none p-0 focus:ring-0 max-w-[300px] h-[2rem] max-h-[9rem]"
-          :value="task.title"
           rows="3"
-          @change="emit('updated')"
+          @change="emit('updated', model)"
         />
 
         <textarea
+          v-model="model.description"
           class="border-none resize-none text-xs text-neutral p-0 focus:ring-0 h-[3rem] max-h-[9rem]"
           placeholder="Adicione uma descrição+ "
-          :value="task.description"
           rows="3"
-          @change="emit('updated')"
+          @change="emit('updated', model)"
         />
       </main>
 
@@ -117,13 +121,6 @@ onMounted(() => {
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
         </div>
-
-        <!-- TODO: change file icon-->
-        <!-- TODO: check if this exists -->
-        <!-- <div class="flex items-center gap-1">
-          <Icon name="tabler:file-horizontal" class="text-neutral" />
-          <span class="text-xs text-neutral">10 arquivos</span>
-        </div> -->
       </footer>
     </div>
   </div>

@@ -88,8 +88,6 @@ export default () => {
 
       await updateDoc(boardRef, mergedData);
 
-      console.info("updated");
-
       SET_SELECTED_BOARD(mergedData as IBoard);
     } catch (error: any) {
       $bus.$emit("ui:toast", {
