@@ -1,4 +1,4 @@
-export const board = [
+export const columns = [
   {
     id: "1",
     title: "A fazer",

@@ -1,14 +1,18 @@
 import { defineStore } from "pinia";
-import { IColumn } from "~/types/board";
+import { IBoard } from "~/types/board";
 
 export const useBoardStore = defineStore({
   id: "board",
   state: () => ({
-    board: null as IColumn[] | null,
+    boards: null as IBoard[] | null,
+    selectedBoard: null as IBoard | null,
   }),
   actions: {
-    SET_COLUMNS(board: IColumn[]) {
-      this.board = board;
+    SET_BOARDS(boards: IBoard[]) {
+      this.boards = boards;
+    },
+    SET_SELECTED_BOARD(board: IBoard) {
+      this.selectedBoard = board;
     },
   },
 });

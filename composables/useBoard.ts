@@ -1,40 +1,70 @@
-import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
-import { IColumn } from "~/types/board";
-import { board } from "~/constants/board";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { IBoard } from "~/types/board";
+import { columns } from "~/constants/columns";
 
 export default () => {
+  const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
   const user = useCurrentUser();
   const db = getFirestore();
-  const { SET_COLUMNS } = useBoardStore();
+  const { SET_BOARDS, SET_SELECTED_BOARD } = useBoardStore();
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
 
-  const createBoard = async () => {
+  const createBoard = async (title: string) => {
+    const boardData = {
+      id: Math.random().toString(36).substring(2, 11),
+      title,
+      columns,
+    } as IBoard;
+
     try {
       START_LOADING();
-      await setDoc(doc(db, "boards", String(user.value?.uid)), {
-        board,
+      await addDoc(collection(db, "boards"), {
+        ...boardData,
+        userId: user.value?.uid,
       });
 
-      await getBoard();
+      $bus.$emit("ui:toast", {
+        message: "Board criado com sucesso!",
+        show: true,
+      });
+
+      // TODO: check if this is the best way to do this
+      await getBoards(user.value?.uid as string);
     } catch (error: any) {
+      $bus.$emit("ui:toast", {
+        message: "Erro ao criar board",
+        show: true,
+      });
+
       throw new Error(error);
     } finally {
       FINISH_LOADING();
     }
   };
 
-  const getBoard = async () => {
+  const getBoards = async (userId: string) => {
     try {
       START_LOADING();
-      const boardDocRef = doc(db, "boards", String(user.value?.uid));
-      const boardDocSnapshot = await getDoc(boardDocRef);
+      const boardsCollectionRef = collection(db, "boards");
+      const querySnapshot = await getDocs(
+        query(boardsCollectionRef, where("userId", "==", userId)),
+      );
 
-      if (boardDocSnapshot.exists()) {
-        const boardData = boardDocSnapshot.data() as { board: IColumn[] };
-        SET_COLUMNS(boardData.board);
-      } else {
-        throw new Error("Board não encontrado");
-      }
+      const boards: any = [];
+      querySnapshot.forEach((doc) => {
+        const boardData = doc.data();
+        boards.push(boardData);
+      });
+
+      SET_BOARDS(boards);
+      SET_SELECTED_BOARD(boards[0]);
     } catch (error: any) {
       throw new Error(error);
     } finally {
@@ -44,6 +74,6 @@ export default () => {
 
   return {
     createBoard,
-    getBoard,
+    getBoards,
   };
 };

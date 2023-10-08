@@ -9,7 +9,7 @@ const alt = useKeyModifier("Alt");
 const showNewTask: Ref<boolean> = ref(false);
 
 const deleteTask = (id: string): void => {
-  boardStore.$state.board?.forEach((column: any) => {
+  boardStore.$state.selectedBoard?.columns.forEach((column: any) => {
     const taskIndex = column.tasks.findIndex((task: any) => task.id === id);
     if (taskIndex !== -1) {
       column.tasks.splice(taskIndex, 1);
@@ -24,11 +24,11 @@ onMounted(() => {
 
 <template>
   <div
-    v-if="boardStore.$state.board"
+    v-if="boardStore.$state.selectedBoard"
     class="flex items-start gap-4 overflow-x-auto"
   >
     <draggable
-      v-model="boardStore.$state.board"
+      v-model="boardStore.$state.selectedBoard.columns"
       group="columns"
       item-key="id"
       class="flex gap-4 items-stretch"

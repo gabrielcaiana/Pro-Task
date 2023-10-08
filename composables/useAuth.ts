@@ -55,6 +55,7 @@ export default () => {
       const data = await signInWithPopup(getAuth(), provider);
       if (data) {
         await setDoc(doc(db, "users", data.user.uid), {
+          id: data.user.uid,
           name: data.user.displayName,
           email: data.user.email,
           photoUrl: data.user.photoURL,
@@ -95,6 +96,7 @@ export default () => {
 
       if (data.user.uid) {
         await setDoc(doc(db, "users", data.user.uid), {
+          id: data.user.uid,
           name: model.name,
           email: model.email,
           photoUrl: data.user.photoURL,
