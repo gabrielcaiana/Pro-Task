@@ -106,10 +106,7 @@ onMounted(() => {
             </div>
           </header>
 
-          <div
-            class="w-full h-[3px] mt-[24px] mb-[28px]"
-            :class="`bg-${column.theme}`"
-          />
+          <BoardLine :color="column.theme" />
 
           <div v-if="column.type === 'todo' && showNewTask">
             <BoardNewTask

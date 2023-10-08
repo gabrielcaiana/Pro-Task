@@ -6,20 +6,15 @@ const props = defineProps<{
 const colorClass = computed(() => {
   switch (props.color) {
     case "purple":
-      return "text-purple";
+      return "bg-purple";
     case "orange":
-      return "text-orange";
+      return "bg-orange";
     case "blue":
-      return "text-blue";
+      return "bg-blue";
   }
 });
 </script>
 
 <template>
-  <Icon
-    class="drag-handle cursor-move text-orange"
-    :class="colorClass"
-    name="tabler:circle-filled"
-    size="8"
-  />
+  <div class="w-full h-[3px] mt-[24px] mb-[28px]" :class="colorClass" />
 </template>
