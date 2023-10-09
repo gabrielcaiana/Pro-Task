@@ -33,11 +33,6 @@ const goToLogin = () => {
         </h1>
 
         <VForm class="space-y-4 md:space-y-6" @submit="forgotPassword">
-          <div class="flex items-center gap-4">
-            <div class="border-b border-1 border-neutral-300 w-full" />
-            <span class="text-sm text-neutral-500">ou</span>
-            <div class="border-b border-1 border-neutral-300 w-full" />
-          </div>
           <div>
             <label
               for="email"
