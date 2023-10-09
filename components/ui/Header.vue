@@ -6,6 +6,7 @@ const boardStore = useBoardStore();
 const { getBoardById } = useBoard();
 
 const handleLogout = async () => {
+  useResetStore();
   await logout();
 };
 
