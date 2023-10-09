@@ -57,13 +57,13 @@ onMounted(() => {
       <span
         v-if="filterActive"
         id="badge-dismiss-default"
-        class="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-blue-900 dark:text-blue-300"
+        class="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded"
         @click="clearFilters"
       >
         Limpar filtros
         <button
           type="button"
-          class="inline-flex items-center p-1 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-800 dark:hover:text-blue-300"
+          class="inline-flex items-center p-1 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900"
           data-dismiss-target="#badge-dismiss-default"
           aria-label="Remove"
         >

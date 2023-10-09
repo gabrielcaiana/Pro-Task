@@ -60,9 +60,4 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
-  runtimeConfig: {
-    public: {
-      firebaseApiKey: process.env.FIREBASE_API_KEY,
-    },
-  },
 });

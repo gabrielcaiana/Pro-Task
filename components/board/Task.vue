@@ -22,6 +22,25 @@ const model: Ref<ITask> = ref({
   ...props.task,
 });
 
+const tagColors = computed(() => {
+  switch (currentTag.value.title) {
+    case "Nova":
+      return "bg-green-100 text-green-800";
+    case "Baixa":
+      return "bg-blue-100 text-blue-800";
+    case "Média":
+      return "bg-yellow-100 text-yellow-800";
+    case "Alta":
+      return "bg-red-100 text-red-800";
+    case "Urgente":
+      return "bg-red-800 text-white";
+    case "Importante":
+      return "bg-yellow-800 text-white";
+    case "Normal":
+      return "bg-blue-800 text-white";
+  }
+});
+
 onKeyStroke("Backspace", (_e) => {
   if (focused.value) emit("delete", props.task.id);
 });
@@ -62,7 +81,7 @@ onMounted(() => {
         <div :data-dropdown-toggle="`dropdown-tabs-${task.id}`">
           <span
             class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded cursor-pointer"
-            :class="currentTag.color"
+            :class="tagColors"
             >{{ currentTag.title }}</span
           >
 

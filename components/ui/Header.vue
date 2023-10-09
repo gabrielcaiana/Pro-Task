@@ -2,8 +2,40 @@
 const userStore = useUserStore();
 const { logout } = useAuth();
 
+const boardStore = useBoardStore();
+const { getBoardById } = useBoard();
+
 const handleLogout = async () => {
   await logout();
+};
+
+const filteredTask: Ref<string> = ref("");
+const filterActive = ref(false);
+
+const searchTasks = () => {
+  if (!boardStore.$state.selectedBoard) return [];
+
+  const columns = boardStore.$state.selectedBoard.columns.filter((column) => {
+    const tasks = column.tasks.filter((task) => {
+      return task.title
+        .toLowerCase()
+        .includes(filteredTask.value.toLowerCase());
+    });
+
+    filterActive.value = true;
+    return tasks.length > 0;
+  });
+
+  boardStore.SET_SELECTED_BOARD({
+    ...boardStore.$state.selectedBoard,
+    columns,
+  });
+};
+
+const clearFilters = () => {
+  getBoardById(String(boardStore.$state.selectedBoard?.id));
+  filteredTask.value = "";
+  filterActive.value = false;
 };
 </script>
 
@@ -14,8 +46,40 @@ const handleLogout = async () => {
         <img src="/logo.svg" alt="Logo Tarefas" />
       </nuxt-link>
 
-      <div class="flex gap-14 flex-1 justify-end">
-        <form class="flex-1 max-w-[535px]">
+      <div class="flex flex-1 justify-end">
+        <span
+          v-if="filterActive"
+          id="badge-dismiss-default"
+          class="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded"
+          @click="clearFilters"
+        >
+          Limpar filtros
+          <button
+            type="button"
+            class="inline-flex items-center p-1 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900"
+            data-dismiss-target="#badge-dismiss-default"
+            aria-label="Remove"
+          >
+            <svg
+              class="w-2 h-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Remover filtros</span>
+          </button>
+        </span>
+
+        <form class="flex-1 max-w-[535px] mr-14" @submit.prevent="searchTasks">
           <div class="flex gap-4">
             <div class="relative flex-1">
               <div
@@ -39,6 +103,7 @@ const handleLogout = async () => {
               </div>
               <input
                 id="default-search"
+                v-model="filteredTask"
                 type="search"
                 class="block w-full p-4 pl-10 h-[38px] text-sm text-gray-900 border-none rounded-[6px] bg-neutral-200 focus:ring-blue-500 focus:border-blue-500 placeholder:text-neutral"
                 placeholder="Buscar por uma tarefa."
