@@ -33,10 +33,11 @@ export default defineNuxtConfig({
     },
   },
   pwa: {
+    registerType: "autoUpdate",
     manifest: {
       name: "Gerenciador de tarefas",
       short_name: "Tarefas",
-      theme_color: "#F5F5F5",
+      theme_color: "#5030E5",
       icons: [
         {
           src: "pwa-192x192.png",
@@ -52,7 +53,7 @@ export default defineNuxtConfig({
           src: "pwa-512x512.png",
           sizes: "512x512",
           type: "image/png",
-          purpose: "gerenciador de tarefas",
+          purpose: "any maskable",
         },
       ],
     },
