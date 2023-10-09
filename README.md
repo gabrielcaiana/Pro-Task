@@ -27,7 +27,8 @@ O objetivo deste projeto é desenvolver uma aplicação web que permita aos usu�
 <img width="1440" alt="Screenshot 2023-10-09 at 07 36 52" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/a558f35d-1d8c-476a-aa1b-8abf17859f3b">
 
 ### Recuperação de senha
-<img width="1440" alt="Screenshot 2023-10-09 at 07 36 59" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/6830e96e-153e-4b29-bac7-4f4dc13a83bb">
+<img width="1440" alt="Screenshot 2023-10-09 at 08 08 05" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/2e7fa8dc-d571-4626-93f2-3fc62fda1c9e">
+
 
 
 ### Nenhum board cadastrado
