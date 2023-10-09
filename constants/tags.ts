@@ -1,4 +1,6 @@
-export const tags = [
+import { ITag } from "~/types/board";
+
+export const tags: ITag[] = [
   {
     title: "Nova",
     color: "bg-green-100 text-green-800 ",

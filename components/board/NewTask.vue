@@ -25,7 +25,7 @@ const createTask = (e: Event) => {
     title: taskTitle,
     createdAt: new Date(),
     description: "",
-    tag: "",
+    tag: "Nova",
   } as ITask);
 
   title.value = "";
