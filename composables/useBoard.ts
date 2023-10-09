@@ -33,6 +33,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message: "Board criado com sucesso!",
         show: true,
+        type: "success",
       });
 
       SET_BOARDS([{ ...boardData, id: boardRef.id }]);

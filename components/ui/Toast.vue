@@ -1,12 +1,16 @@
 <script setup lang="ts">
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
 
+type ToastType = "danger" | "success";
+
 const message: Ref<string> = ref("");
 const showToast: Ref<boolean> = ref(false);
+const toastType: Ref<ToastType> = ref("danger");
 
 $bus.$on("ui:toast", (data) => {
   message.value = data.message;
   showToast.value = data.show;
+  toastType.value = data.type;
 });
 
 const closeToast = () => {
@@ -34,10 +38,23 @@ watch(
       role="alert"
     >
       <div
-        class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg"
+        class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"
+        :class="
+          toastType === 'danger'
+            ? 'bg-red-100 text-red-500'
+            : 'bg-green-100 text-green-500'
+        "
       >
-        <Icon name="tabler:circle-x-filled" size="18" />
-        <span class="sr-only">Error icon</span>
+        <Icon
+          v-if="toastType === 'danger'"
+          name="tabler:circle-x-filled"
+          size="18"
+        />
+        <Icon
+          v-if="toastType === 'success'"
+          name="tabler:square-rounded-check-filled"
+          size="18"
+        />
       </div>
       <div class="ml-3 text-sm font-normal">{{ message }}</div>
       <button

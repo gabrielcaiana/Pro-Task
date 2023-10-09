@@ -104,11 +104,11 @@ export default () => {
           providerId: data.user.providerId,
         });
 
-        // TODO: create variant to toast
         setTimeout(() => {
           $bus.$emit("ui:toast", {
             message: "Conta criada com sucesso!",
             show: true,
+            type: "success",
           });
         }, 500);
 
@@ -152,6 +152,7 @@ export default () => {
         $bus.$emit("ui:toast", {
           message: "Email enviado com sucesso!",
           show: true,
+          type: "success",
         });
       }, 500);
     } catch (error) {
