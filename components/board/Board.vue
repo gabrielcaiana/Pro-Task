@@ -59,7 +59,7 @@ onMounted(() => {
 <template>
   <div
     v-if="boardStore.$state.selectedBoard"
-    class="flex flex-col items-start gap-4 overflow-x-auto mb-10"
+    class="flex flex-col items-start gap-4 overflow-x-auto md:overflow-x-hidden mb-10"
   >
     <BoardFilters />
     <draggable
