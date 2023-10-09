@@ -42,6 +42,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message: "Erro ao criar board",
         show: true,
+        type: "danger",
       });
 
       throw new Error(error);
@@ -89,6 +90,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message: "Erro ao buscar board",
         show: true,
+        type: "danger",
       });
 
       throw new Error(error);
@@ -119,6 +121,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message: "Erro ao atualizar o board",
         show: true,
+        type: "danger",
       });
 
       throw new Error(error);

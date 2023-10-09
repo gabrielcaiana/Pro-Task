@@ -37,6 +37,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message: "Houve um erro ao fazer login.",
         show: true,
+        type: "danger",
       });
     } finally {
       FINISH_LOADING();
@@ -79,6 +80,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message,
         show: true,
+        type: "danger",
       });
     } finally {
       FINISH_LOADING();
@@ -124,6 +126,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message,
         show: true,
+        type: "danger",
       });
     } finally {
       FINISH_LOADING();
@@ -159,6 +162,7 @@ export default () => {
       $bus.$emit("ui:toast", {
         message: "Houve um erro ao resetar a senha.",
         show: true,
+        type: "danger",
       });
     } finally {
       FINISH_LOADING();
