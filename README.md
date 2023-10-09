@@ -21,26 +21,27 @@ O objetivo deste projeto é desenvolver uma aplicação web que permita aos usu�
 ## Preview do sistema
 
 ### Login
-<img width="1440" alt="Screenshot 2023-10-09 at 07 36 45" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/d11382d6-9021-4ce0-8545-305d5a024e23">
+<img width="1440" alt="Screenshot 2023-10-09 at 07 36 45" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/03502f51-cee4-4897-8cd9-a3ff4a5e91d4">
+
 
 ### Cadastro de usuário
-<img width="1440" alt="Screenshot 2023-10-09 at 07 36 52" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/a558f35d-1d8c-476a-aa1b-8abf17859f3b">
+<img width="1440" alt="Screenshot 2023-10-09 at 07 36 52" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/e84ce191-6f0e-48eb-a1b4-e866506d9f2b">
+
 
 ### Recuperação de senha
-<img width="1440" alt="Screenshot 2023-10-09 at 08 08 05" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/2e7fa8dc-d571-4626-93f2-3fc62fda1c9e">
-
+<img width="1440" alt="Screenshot 2023-10-09 at 08 06 33" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/67c6089e-a54a-49b0-8cb7-dc4faac566ad">
 
 
 ### Nenhum board cadastrado
-<img width="1440" alt="Screenshot 2023-10-09 at 07 47 33" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/ebd937d6-4829-4d50-83ad-259c8ea4f148">
+<img width="1440" alt="Screenshot 2023-10-09 at 07 47 33" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/c07c2f69-1247-4034-aea4-9ae323c8353f">
+
 
 ### Modal para cadastrar novo board
-<img width="1440" alt="Screenshot 2023-10-09 at 07 47 41" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/85624f09-d931-4621-a455-4e7160652327">
+<img width="1440" alt="Screenshot 2023-10-09 at 07 47 41" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/39c295c5-73c8-4783-a7d9-aeadcec8ab9d">
+
 
 ### Board
-<img width="1440" alt="Screenshot 2023-10-09 at 07 37 10" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/3f1e8701-6be8-4f37-8db4-f712e06ef4e2">
-
-<img width="1440" alt="Screenshot 2023-10-09 at 07 41 32" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/21569e49-6144-4d93-a10c-cc8f1c2c8e76">
+<img width="1440" alt="Screenshot 2023-10-09 at 07 41 32" src="https://github.com/gabrielcaiana/nuxt-tasks/assets/26663338/e117cfbf-c58f-4b77-abc2-17ab598bee32">
 
 
 
