@@ -14,7 +14,7 @@ onMounted(() => nextTick(async () => await getDbUser()));
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator />
-    <NuxtPwaManifest />
+    <VitePwaManifest />
     <NuxtPage />
     <UiToast />
   </NuxtLayout>
