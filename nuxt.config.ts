@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "initial-scale=1",
-      meta: [{ name: "description", content: "Gerenciador de tarefas" }],
+      meta: [{ name: "description", content: "Pro Task" }],
       link: [{ rel: "icon", type: "image/x-svg", href: "/favicon.svg" }],
     },
     pageTransition: { name: "page", mode: "out-in" },
@@ -35,8 +35,8 @@ export default defineNuxtConfig({
   pwa: {
     registerType: "autoUpdate",
     manifest: {
-      name: "Gerenciador de tarefas",
-      short_name: "Tarefas",
+      name: "Pro Task",
+      short_name: "Pro Task",
       theme_color: "#5030E5",
       icons: [
         {

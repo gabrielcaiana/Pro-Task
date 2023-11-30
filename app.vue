@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  titleTemplate: () => "Gerenciador de tarefas",
+  titleTemplate: () => "Pro Task",
   htmlAttrs: {
     lang: "pt-br",
   },
@@ -14,6 +14,7 @@ onMounted(() => nextTick(async () => await getDbUser()));
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator />
+    <NuxtPwaManifest />
     <NuxtPage />
     <UiToast />
   </NuxtLayout>
