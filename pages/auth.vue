@@ -30,7 +30,12 @@ $bus.$on("auth:form", (data: { page: string }) => {
 </script>
 
 <template>
-  <section>
+  <section
+    :style="{
+      background:
+        'var(--Gradient, linear-gradient(180deg, #5030E5 0%, #856CF6 100%))',
+    }"
+  >
     <Transition name="layout" mode="out-in">
       <component :is="checkForm()" />
     </Transition>

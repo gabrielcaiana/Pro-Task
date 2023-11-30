@@ -36,7 +36,7 @@ const goToLogin = () => {
       class="flex items-center text-2xl font-semibold text-gray-900 mb-8"
       @click="goToLogin"
     >
-      <img class="w-[150px] mr-2" src="/logo.svg" alt="logo" />
+      <img class="w-[150px] mr-2" src="/logo-white.svg" alt="Pro Task Logo" />
     </nuxt-link>
     <div
       class="w-full bg-white rounded-lg shadow-2xl md:mt-0 sm:max-w-md xl:p-0"

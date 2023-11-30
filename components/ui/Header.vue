@@ -44,7 +44,7 @@ const clearFilters = () => {
   <div>
     <header class="flex justify-between items-center py-[52px] pb-[60px]">
       <nuxt-link to="/">
-        <img src="/logo.svg" alt="Logo Tarefas" />
+        <img src="/logo.svg" alt="Pro Task Logo" />
       </nuxt-link>
 
       <div class="flex flex-1 justify-end">
