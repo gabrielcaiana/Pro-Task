@@ -1,4 +1,4 @@
-# Lista de Tarefas com Firebase e Nuxt.js
+# ProTask
 
 Este é um projeto que visa criar uma lista de tarefas eficiente e amigável, usando o Firebase como backend e o Nuxt.js como frontend. Abaixo, você encontrará informações sobre o projeto, requisitos mínimos e algumas dicas úteis para o desenvolvimento.
 
