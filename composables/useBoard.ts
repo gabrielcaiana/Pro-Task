@@ -29,6 +29,8 @@ export default () => {
       } as IBoard;
 
       const boardRef = await addDoc(collection(db, "boards"), boardData);
+      boardData.id = boardRef.id;
+      await updateDoc(doc(db, "boards", boardRef.id), { id: boardRef.id });
 
       $bus.$emit("ui:toast", {
         message: "Board criado com sucesso!",
@@ -100,6 +102,7 @@ export default () => {
   };
 
   const updateBoard = async (boardId: string, updatedData: Partial<IBoard>) => {
+    console.log("boardId", boardId);
     try {
       const boardRef = doc(db, "boards", boardId);
       const boardDoc = await getDoc(boardRef);
