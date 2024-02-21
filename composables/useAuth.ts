@@ -1,14 +1,19 @@
-import { doc, setDoc, getFirestore, getDoc } from "firebase/firestore";
 import { useUserStore } from "~/stores/user";
 import { IAuthentication, IUser } from "~/types/authentication";
-import type { Auth } from "~/plugins/firebase";
+import type { Auth, Firebase } from "~/plugins/firebase";
+
+type NuxtApp = {
+  $auth: Auth;
+  $firebase: Firebase;
+  $bus: Bus;
+};
 
 export default () => {
-  const { $auth } = useNuxtApp() as unknown as { $auth: Auth };
+  const { $auth, $firebase, $bus } = useNuxtApp() as unknown as NuxtApp;
+
   const user = useCurrentUser();
-  const db = getFirestore();
+  const db = $firebase.getFirestore();
   const router = useRouter();
-  const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
   const { SET_USER } = useUserStore();
 
@@ -47,7 +52,7 @@ export default () => {
 
       const data = await $auth.signInWithPopup($auth.getAuth(), provider);
       if (data) {
-        await setDoc(doc(db, "users", data.user.uid), {
+        await $firebase.setDoc($firebase.doc(db, "users", data.user.uid), {
           id: data.user.uid,
           name: data.user.displayName,
           email: data.user.email,
@@ -89,7 +94,7 @@ export default () => {
       );
 
       if (data.user.uid) {
-        await setDoc(doc(db, "users", data.user.uid), {
+        await $firebase.setDoc($firebase.doc(db, "users", data.user.uid), {
           id: data.user.uid,
           name: model.name,
           email: model.email,
@@ -166,8 +171,8 @@ export default () => {
 
     try {
       START_LOADING();
-      const userDocRef = doc(db, "users", String(user.value?.uid));
-      const userDocSnapshot = await getDoc(userDocRef);
+      const userDocRef = $firebase.doc(db, "users", String(user.value?.uid));
+      const userDocSnapshot = await $firebase.getDoc(userDocRef);
 
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data();

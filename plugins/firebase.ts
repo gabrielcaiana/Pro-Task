@@ -9,6 +9,8 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 
+import { doc, setDoc, getFirestore, getDoc } from "firebase/firestore";
+
 export interface Auth {
   GoogleAuthProvider: typeof GoogleAuthProvider;
   GithubAuthProvider: typeof GithubAuthProvider;
@@ -18,7 +20,13 @@ export interface Auth {
   signOut: typeof signOut;
   createUserWithEmailAndPassword: typeof createUserWithEmailAndPassword;
   sendPasswordResetEmail: typeof sendPasswordResetEmail;
+}
 
+export interface Firebase {
+  doc: typeof doc;
+  setDoc: typeof setDoc;
+  getFirestore: typeof getFirestore;
+  getDoc: typeof getDoc;
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -33,7 +41,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     sendPasswordResetEmail,
   }
 
+  const firebase = {
+    doc,
+    setDoc,
+    getFirestore,
+    getDoc,
+  }
+
   return {
-    provide: { auth }
+    provide: { auth, firebase }
   }
 })
