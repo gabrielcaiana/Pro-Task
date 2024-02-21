@@ -1,18 +1,10 @@
-import {
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  signOut,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
 import { doc, setDoc, getFirestore, getDoc } from "firebase/firestore";
 import { useUserStore } from "~/stores/user";
 import { IAuthentication, IUser } from "~/types/authentication";
+import type { Auth } from "~/plugins/firebase";
 
 export default () => {
+  const { $auth } = useNuxtApp() as unknown as { $auth: Auth };
   const user = useCurrentUser();
   const db = getFirestore();
   const router = useRouter();
@@ -23,8 +15,8 @@ export default () => {
   const signIn = async (model: IAuthentication) => {
     try {
       START_LOADING();
-      const data = await signInWithEmailAndPassword(
-        getAuth(),
+      const data = await $auth.signInWithEmailAndPassword(
+        $auth.getAuth(),
         model.email,
         model.password,
       );
@@ -50,10 +42,10 @@ export default () => {
 
       const provider =
         typeProvider === "google"
-          ? new GoogleAuthProvider()
-          : new GithubAuthProvider();
+          ? new $auth.GoogleAuthProvider()
+          : new $auth.GithubAuthProvider();
 
-      const data = await signInWithPopup(getAuth(), provider);
+      const data = await $auth.signInWithPopup($auth.getAuth(), provider);
       if (data) {
         await setDoc(doc(db, "users", data.user.uid), {
           id: data.user.uid,
@@ -90,8 +82,8 @@ export default () => {
   const signUp = async (model: IAuthentication) => {
     try {
       START_LOADING();
-      const data = await createUserWithEmailAndPassword(
-        getAuth(),
+      const data = await $auth.createUserWithEmailAndPassword(
+        $auth.getAuth(),
         model.email,
         model.password,
       );
@@ -136,7 +128,7 @@ export default () => {
   const logout = async () => {
     try {
       START_LOADING();
-      await signOut(getAuth());
+      await $auth.signOut($auth.getAuth());
       router.push("/auth");
     } catch (error: any) {
       throw new Error(error);
@@ -148,7 +140,7 @@ export default () => {
   const resetPassword = async (email: string) => {
     try {
       START_LOADING();
-      await sendPasswordResetEmail(getAuth(), email);
+      await $auth.sendPasswordResetEmail($auth.getAuth(), email);
       $bus.$emit("auth:form", { page: "signIn" });
 
       setTimeout(() => {
