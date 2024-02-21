@@ -1,54 +1,11 @@
-import {
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  signOut,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import * as AuthFunctions from "firebase/auth";
+import * as FirestoreFunctions from "firebase/firestore";
 
-import { doc, setDoc, getFirestore, getDoc } from "firebase/firestore";
-
-export interface Auth {
-  GoogleAuthProvider: typeof GoogleAuthProvider;
-  GithubAuthProvider: typeof GithubAuthProvider;
-  getAuth: typeof getAuth;
-  signInWithPopup: typeof signInWithPopup;
-  signInWithEmailAndPassword: typeof signInWithEmailAndPassword;
-  signOut: typeof signOut;
-  createUserWithEmailAndPassword: typeof createUserWithEmailAndPassword;
-  sendPasswordResetEmail: typeof sendPasswordResetEmail;
-}
-
-export interface Firebase {
-  doc: typeof doc;
-  setDoc: typeof setDoc;
-  getFirestore: typeof getFirestore;
-  getDoc: typeof getDoc;
-}
-
-export default defineNuxtPlugin((nuxtApp) => {
-  const auth: Auth = {
-    GoogleAuthProvider,
-    GithubAuthProvider,
-    getAuth,
-    signInWithPopup,
-    signInWithEmailAndPassword,
-    signOut,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-  }
-
-  const firebase = {
-    doc,
-    setDoc,
-    getFirestore,
-    getDoc,
-  }
+export default defineNuxtPlugin(() => {
+  const auth = { ...AuthFunctions };
+  const firebase = { ...FirestoreFunctions };
 
   return {
-    provide: { auth, firebase }
-  }
-})
+    provide: { auth, firebase },
+  };
+});

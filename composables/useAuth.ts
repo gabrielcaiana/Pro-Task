@@ -1,15 +1,9 @@
 import { useUserStore } from "~/stores/user";
 import { IAuthentication, IUser } from "~/types/authentication";
-import type { Auth, Firebase } from "~/plugins/firebase";
-
-type NuxtApp = {
-  $auth: Auth;
-  $firebase: Firebase;
-  $bus: Bus;
-};
 
 export default () => {
-  const { $auth, $firebase, $bus } = useNuxtApp() as unknown as NuxtApp;
+  const { $auth, $firebase } = useNuxtApp();
+  const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
 
   const user = useCurrentUser();
   const db = $firebase.getFirestore();
