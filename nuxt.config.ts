@@ -61,4 +61,12 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  runtimeConfig: {
+    public: {
+      honeybadger: {
+        apiKey: process.env.HONEYBADGER_API_KEY,
+        environment: process.env.HONEYBADGER_ENVIRONMENT,
+      },
+    },
+  },
 });

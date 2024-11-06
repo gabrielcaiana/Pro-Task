@@ -11,6 +11,8 @@ export default () => {
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
   const { SET_USER } = useUserStore();
 
+  const honeybadger = useNuxtApp().$honeybadger;
+
   const signIn = async (model: IAuthentication) => {
     try {
       START_LOADING();
@@ -29,6 +31,38 @@ export default () => {
         message: "Houve um erro ao fazer login.",
         show: true,
         type: "danger",
+      });
+
+      honeybadger.notify(error, {
+        name: error.name || "Error",
+        message: error.message,
+        stack: error.stack,
+        context: {
+          email: model.email,
+        },
+        severity: "error",
+        tags: ["auth", "user"],
+        breadcrumbs: [
+          {
+            category: "auth",
+            message: "User authentication error",
+            metadata: {
+              email: model.email,
+            },
+          },
+        ],
+        user: {
+          email: model.email,
+        },
+        // request: {
+        //   url: window.location.href,
+        //   component: "useAuth",
+        //   action: "login",
+        // },
+        // environment: {
+        //   browser: navigator.userAgent,
+        //   platform: navigator.platform,
+        // },
       });
     } finally {
       FINISH_LOADING();
