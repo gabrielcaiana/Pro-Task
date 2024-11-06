@@ -31,6 +31,7 @@
   "dependencies": {
     "@firebase/app-types": "^0.9.0",
     "@honeybadger-io/js": "^6.10.1",
+    "@honeybadger-io/rollup-plugin": "^5.10.0",
     "@honeybadger-io/vue": "^6.1.26",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@pinia/nuxt": "^0.4.11",

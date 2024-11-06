@@ -1,3 +1,6 @@
+// @ts-ignore
+import HoneybadgerSourceMapPlugin from '@honeybadger-io/rollup-plugin';
+
 export default defineNuxtConfig({
   ssr: false,
   app: {
@@ -60,6 +63,19 @@ export default defineNuxtConfig({
   },
   imports: {
     dirs: ["stores"],
+  },
+  vite: {
+    build: {
+      rollupOptions: {
+        plugins: [
+          HoneybadgerSourceMapPlugin({
+            apiKey: process.env.HONEYBADGER_API_KEY,
+            assetsUrl: 'https://protask.gabrielcaiana.com/_nuxt/',
+            revision: process.env.COMMIT_SHA || new Date().toISOString(),
+          }),
+        ],
+      },
+    },
   },
   runtimeConfig: {
     public: {
