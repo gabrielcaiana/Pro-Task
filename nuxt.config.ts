@@ -23,9 +23,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
   ],
   vuefire: {
-    auth: {
-      enabled: true,
-    },
+    auth: { enabled: true },
     config: {
       apiKey: process.env.FIREBASE_API_KEY,
       authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -42,22 +40,9 @@ export default defineNuxtConfig({
       short_name: "Pro Task",
       theme_color: "#5030E5",
       icons: [
-        {
-          src: "pwa-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-        },
-        {
-          src: "pwa-512x512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any maskable",
-        },
+        { src: "pwa-192x192.png", sizes: "192x192", type: "image/png" },
+        { src: "pwa-512x512.png", sizes: "512x512", type: "image/png" },
+        { src: "pwa-512x512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
       ],
     },
   },
@@ -65,17 +50,13 @@ export default defineNuxtConfig({
     dirs: ["stores"],
   },
   vite: {
-    build: {
-      rollupOptions: {
-        plugins: [
-          HoneybadgerSourceMapPlugin({
-            apiKey: process.env.HONEYBADGER_API_KEY,
-            assetsUrl: 'https://protask.gabrielcaiana.com/_nuxt/',
-            revision: process.env.COMMIT_SHA || new Date().toISOString(),
-          }),
-        ],
-      },
-    },
+    plugins: [
+      HoneybadgerSourceMapPlugin({
+        apiKey: process.env.HONEYBADGER_API_KEY,
+        assetsUrl: 'https://protask.gabrielcaiana.com/_nuxt/',
+        revision: process.env.COMMIT_SHA || new Date().toISOString(),
+      }),
+    ],
   },
   runtimeConfig: {
     public: {
