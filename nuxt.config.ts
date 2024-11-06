@@ -14,6 +14,9 @@ export default defineNuxtConfig({
     layoutTransition: { name: "layout", mode: "out-in" },
   },
   devtools: { enabled: true },
+  sourcemap: {
+    client: true
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "nuxt-vuefire",
