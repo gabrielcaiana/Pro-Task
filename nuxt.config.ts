@@ -56,7 +56,7 @@ export default defineNuxtConfig({
     plugins: [
       HoneybadgerSourceMapPlugin({
         apiKey: process.env.HONEYBADGER_API_KEY,
-        assetsUrl: 'https://protask.gabrielcaiana.com/_nuxt/',
+        assetsUrl: 'https://protask.gabrielcaiana.com/',
         revision: process.env.COMMIT_SHA || new Date().toISOString(),
       }),
     ],
