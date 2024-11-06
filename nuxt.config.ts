@@ -14,9 +14,6 @@ export default defineNuxtConfig({
     layoutTransition: { name: "layout", mode: "out-in" },
   },
   devtools: { enabled: true },
-  sourcemap: {
-    client: true
-  },
   modules: [
     "@nuxtjs/tailwindcss",
     "nuxt-vuefire",
@@ -52,11 +49,15 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  sourcemap: { client: true },
   vite: {
+    build: {
+      sourcemap: true,
+    },
     plugins: [
       HoneybadgerSourceMapPlugin({
         apiKey: process.env.HONEYBADGER_API_KEY,
-        assetsUrl: 'https://protask.gabrielcaiana.com/',
+        assetsUrl: 'https://protask.gabrielcaiana.com/_nuxt/',
         revision: process.env.COMMIT_SHA || new Date().toISOString(),
       }),
     ],
