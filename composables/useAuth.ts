@@ -107,6 +107,23 @@ export default () => {
         show: true,
         type: "danger",
       });
+
+      honeybadger.notify(error, {
+        name: error.name || "Error",
+        message: error.message,
+        stack: error.stack,
+        context: {},
+        severity: "error",
+        tags: ["auth", "user"],
+        breadcrumbs: [
+          {
+            category: "auth",
+            message: "User authentication error",
+            metadata: {},
+          },
+        ],
+        user: {}
+      });
     } finally {
       FINISH_LOADING();
     }
@@ -152,6 +169,23 @@ export default () => {
         message,
         show: true,
         type: "danger",
+      });
+
+      honeybadger.notify(error, {
+        name: error.name || "Error",
+        message: error.message,
+        stack: error.stack,
+        context: {},
+        severity: "error",
+        tags: ["auth", "user"],
+        breadcrumbs: [
+          {
+            category: "auth",
+            message: "error creating user",
+            metadata: {},
+          },
+        ],
+        user: {}
       });
     } finally {
       FINISH_LOADING();
