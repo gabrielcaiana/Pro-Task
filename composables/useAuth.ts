@@ -1,5 +1,4 @@
 import { useUserStore } from "~/stores/user";
-import { IAuthentication, IUser } from "~/types/authentication";
 
 export default () => {
   const { $auth, $firebase } = useNuxtApp();
