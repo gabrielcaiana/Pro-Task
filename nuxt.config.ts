@@ -53,6 +53,11 @@ export default defineNuxtConfig({
   vite: {
     build: {
       sourcemap: true,
+      rollupOptions: {
+        output: {
+          sourcemap: true,
+        },
+      },
     },
     plugins: [
       HoneybadgerSourceMapPlugin({
