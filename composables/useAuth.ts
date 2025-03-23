@@ -121,7 +121,7 @@ export default () => {
             metadata: {},
           },
         ],
-        user: {}
+        user: {},
       });
     } finally {
       FINISH_LOADING();
@@ -184,7 +184,7 @@ export default () => {
             metadata: {},
           },
         ],
-        user: {}
+        user: {},
       });
     } finally {
       FINISH_LOADING();

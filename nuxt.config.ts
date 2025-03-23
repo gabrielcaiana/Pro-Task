@@ -1,5 +1,5 @@
 // @ts-ignore
-import HoneybadgerSourceMapPlugin from '@honeybadger-io/rollup-plugin';
+import HoneybadgerSourceMapPlugin from "@honeybadger-io/rollup-plugin";
 
 export default defineNuxtConfig({
   ssr: false,
@@ -42,7 +42,12 @@ export default defineNuxtConfig({
       icons: [
         { src: "pwa-192x192.png", sizes: "192x192", type: "image/png" },
         { src: "pwa-512x512.png", sizes: "512x512", type: "image/png" },
-        { src: "pwa-512x512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
+        {
+          src: "pwa-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
       ],
     },
   },
@@ -62,7 +67,7 @@ export default defineNuxtConfig({
     plugins: [
       HoneybadgerSourceMapPlugin({
         apiKey: process.env.HONEYBADGER_API_KEY,
-        assetsUrl: 'https://protask.gabrielcaiana.com',
+        assetsUrl: "https://protask.gabrielcaiana.com",
         revision: process.env.VERCEL_GIT_COMMIT_SHA || new Date().toISOString(),
       }),
     ],
