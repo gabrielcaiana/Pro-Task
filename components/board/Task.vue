@@ -2,8 +2,8 @@
 import { ref } from "vue";
 import { onKeyStroke } from "@vueuse/core";
 import { initFlowbite } from "flowbite";
-import { ITag, ITask } from "~/types/board";
 import { tags } from "~/constants/tags";
+import type { ITag, ITask } from "~/types/board";
 
 const props = defineProps<{
   task: ITask;
@@ -134,7 +134,7 @@ onMounted(() => {
       <main class="flex flex-col w-full">
         <textarea
           v-model="model.title"
-          class="text-neutral-800 text-lg border-none resize-none p-0 focus:ring-0 max-w-[300px] h-[2rem] max-h-[9rem]"
+          class="text-neutral-800 text-lg border-none resize-none p-0 focus:ring-0 max-w-[300px] h-[4rem] max-h-[9rem]"
           rows="3"
           @change="emit('updated', model)"
         />
