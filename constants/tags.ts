@@ -1,4 +1,4 @@
-import { ITag } from "~/types/board";
+import type { ITag } from "~/types/board";
 
 export const tags: ITag[] = [
   {

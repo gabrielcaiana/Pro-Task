@@ -9,7 +9,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { IBoard } from "~/types/board";
+import type { IBoard } from "~/types/board";
 import { columns } from "~/constants/columns";
 
 export default () => {

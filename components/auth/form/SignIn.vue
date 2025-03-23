@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IAuthentication } from "~/types/authentication";
+import type { IAuthentication } from "~/types/authentication";
 
 const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
 
@@ -8,6 +8,7 @@ const { signIn, signInWithProvider } = useAuth();
 const loadingStore = useLoadingStore();
 
 const model: Ref<IAuthentication> = ref({
+  name: "",
   email: "",
   password: "",
 });
