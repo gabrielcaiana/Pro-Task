@@ -1,0 +1,14 @@
+# Disable SSR
+ssr=false
+
+# Configuration for `@nuxt/devtools`
+devtools.enabled=true
+
+# Add Nuxt modules
+modules[]=@nuxtjs/tailwindcss
+modules[]=@nuxtjs/tailwindcss
+modules[]=nuxt-vuefire
+modules[]=nuxt-icon
+modules[]=@vite-pwa/nuxt
+modules[]=@pinia/nuxt
+modules[]=@vueuse/nuxt

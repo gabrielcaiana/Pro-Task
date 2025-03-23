@@ -1,8 +1,13 @@
-// @ts-ignore
+// @ts-ignore - not exists types for honeybadger-io/rollup-plugin
 import HoneybadgerSourceMapPlugin from "@honeybadger-io/rollup-plugin";
 
 export default defineNuxtConfig({
-  ssr: false,
+  future: {
+    compatibilityVersion: 4,
+  },
+  dir: {
+    app: "app",
+  },
   app: {
     head: {
       charset: "utf-8",
@@ -13,15 +18,7 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
     layoutTransition: { name: "layout", mode: "out-in" },
   },
-  devtools: { enabled: true },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "nuxt-vuefire",
-    "nuxt-icon",
-    "@vite-pwa/nuxt",
-    "@pinia/nuxt",
-    "@vueuse/nuxt",
-  ],
+
   vuefire: {
     auth: { enabled: true },
     config: {
@@ -33,6 +30,7 @@ export default defineNuxtConfig({
       messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     },
   },
+
   pwa: {
     registerType: "autoUpdate",
     manifest: {
@@ -51,10 +49,13 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   imports: {
     dirs: ["stores"],
   },
+
   sourcemap: { client: true },
+
   vite: {
     build: {
       sourcemap: true,
@@ -72,6 +73,7 @@ export default defineNuxtConfig({
       }),
     ],
   },
+
   runtimeConfig: {
     public: {
       honeybadger: {
@@ -80,4 +82,6 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  compatibilityDate: "2025-03-23",
 });

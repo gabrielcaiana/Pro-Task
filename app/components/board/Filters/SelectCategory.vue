@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { initFlowbite } from "flowbite";
-import { Ref, ref, onMounted } from "vue";
 import { tags } from "~/constants/tags";
 
 const emit = defineEmits<{

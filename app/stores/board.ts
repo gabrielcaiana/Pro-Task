@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IBoard } from "~/types/board";
+import type { IBoard } from "~/types/board";
 
 export const useBoardStore = defineStore({
   id: "board",

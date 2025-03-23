@@ -8,7 +8,10 @@ useHead({
 
 const { getDbUser } = useAuth();
 
-onMounted(() => nextTick(async () => await getDbUser()));
+onMounted(async () => {
+  await nextTick();
+  await getDbUser();
+});
 </script>
 
 <template>

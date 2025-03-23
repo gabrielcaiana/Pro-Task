@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from "nanoid";
 
-import { ref } from "vue";
-import { ITask } from "~/types/board";
+import type { ITask } from "~/types/board";
 
 const emit = defineEmits<{
   (e: "add", payload: any): void;

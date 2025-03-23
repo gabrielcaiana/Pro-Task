@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { initFlowbite } from "flowbite";
-import { IColumn } from "~/types/board";
+import type { IColumn } from "~/types/board";
 
 const { selectedBoard, SET_SELECTED_BOARD } = useBoardStore();
 

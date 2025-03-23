@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { initFlowbite } from "flowbite";
-import { IBoard, IColumn, ITask } from "~/types/board";
+import type { IBoard, IColumn, ITask } from "~/types/board";
 
 const boardStore = useBoardStore();
 const { updateBoard } = useBoard();

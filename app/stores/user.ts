@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IUser } from "~/types/authentication";
+import type { IUser } from "~/types/authentication";
 
 export const useUserStore = defineStore({
   id: "user",
