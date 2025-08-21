@@ -102,7 +102,6 @@ export default () => {
   };
 
   const updateBoard = async (boardId: string, updatedData: Partial<IBoard>) => {
-    console.log("boardId", boardId);
     try {
       const boardRef = doc(db, "boards", boardId);
       const boardDoc = await getDoc(boardRef);
