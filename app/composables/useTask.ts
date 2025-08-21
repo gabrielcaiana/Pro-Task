@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -128,7 +129,38 @@ export default () => {
       FINISH_LOADING();
     }
   };
-  const deleteTask = () => {};
+  const deleteTask = async (taskId: string) => {
+    try {
+      START_LOADING();
+      const taskRef = doc(db, "tasks", taskId);
+      const taskDoc = await getDoc(taskRef);
+
+      if (!taskDoc.exists()) {
+        throw createError({
+          statusMessage: "Falha ao encontrar a task",
+          statusCode: 404,
+        });
+      }
+
+      await deleteDoc(taskRef);
+
+      $bus.$emit("ui:toast", {
+        message: "Task excluida com sucesso!",
+        show: true,
+        type: "success",
+      });
+    } catch (error: any) {
+      $bus.$emit("ui:toast", {
+        message: "Falha ao deletar a task",
+        show: true,
+        type: "danger",
+      });
+
+      throw new Error(error);
+    } finally {
+      FINISH_LOADING();
+    }
+  };
 
   return {
     getTasks,
