@@ -16,7 +16,7 @@ export default () => {
   const { $bus } = useNuxtApp() as unknown as { $bus: Bus };
   const user = useCurrentUser();
   const db = getFirestore();
-  const { SET_TASKS, SET_TASK } = useTasksStore();
+  const { SET_TASKS, SET_TASK, ADD_TASK, UPDATE_TASK } = useTasksStore();
   const { START_LOADING, FINISH_LOADING } = useLoadingStore();
 
   const createTask = async (task: TaskItem) => {
@@ -36,7 +36,7 @@ export default () => {
         type: "success",
       });
 
-      SET_TASKS(task);
+      ADD_TASK(task);
     } catch (error: any) {
       $bus.$emit("ui:toast", {
         message: "Erro ao criar a task",
@@ -50,12 +50,22 @@ export default () => {
     }
   };
 
-  const getTasks = async (userId: string) => {
+  const getTasks = async () => {
     try {
       START_LOADING();
 
+      if (!user.value?.uid) {
+        throw createError({
+          statusMessage: "Usuário não encontrado",
+          statusCode: 404,
+        });
+      }
+
       const tasksCollectionRef = collection(db, "tasks");
-      const q = query(tasksCollectionRef, where("userId", "==", userId));
+      const q = query(
+        tasksCollectionRef,
+        where("userId", "==", user.value.uid),
+      );
       const querySnapshot = await getDocs(q);
 
       const tasks: TaskItem[] = [];
@@ -88,7 +98,7 @@ export default () => {
 
       const taskData = taskDoc.data();
 
-      SET_TASK(taskData);
+      SET_TASK(taskData as TaskItem);
     } catch (error: any) {
       $bus.$emit("ui:toast", {
         message: "Erro ao buscar a task",
@@ -123,7 +133,7 @@ export default () => {
       };
 
       await updateDoc(taskRef, mergeTask);
-      SET_TASKS(mergeTask);
+      UPDATE_TASK(mergeTask as TaskItem);
     } catch (error) {
     } finally {
       FINISH_LOADING();

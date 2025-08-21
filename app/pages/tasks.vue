@@ -155,7 +155,7 @@
                   <button
                     title="Excluir tarefa"
                     class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                    @click="deleteTask(task.id)"
+                    @click="removeTask(task.id)"
                   >
                     <svg
                       class="w-4 h-4"
@@ -310,6 +310,16 @@ defineOptions({
   name: "TaskPage",
 });
 
+definePageMeta({
+  middleware: ["auth"],
+});
+
+// composable task
+const { getTasks, createTask, updateTask, deleteTask } = useTask();
+
+// Store
+const tasksStore = useTasksStore();
+
 // Animation
 const animationEmptyState = ref<any>(null);
 
@@ -318,42 +328,20 @@ const searchQuery = ref("");
 const statusFilter = ref("");
 const priorityFilter = ref("");
 const showAddTask = ref(false);
-const editingTask = ref<(TaskItem & { completed: boolean }) | null>(null);
+const editingTask = ref<TaskItem | null>(null);
 
 // Task form
-const taskForm = ref({
+const taskForm = ref<TaskItem>({
+  id: "",
   title: "",
   description: "",
   tag: "Nova",
+  completed: false,
+  createdAt: new Date(),
 });
 
-// Mock tasks data (in a real app, this would come from a store or API)
-const tasks = ref<(TaskItem & { completed: boolean })[]>([
-  {
-    id: "1",
-    title: "Implementar autenticação",
-    description: "Criar sistema de login e registro de usuários",
-    tag: "Alta",
-    createdAt: new Date("2024-01-15"),
-    completed: false,
-  },
-  {
-    id: "2",
-    title: "Design do dashboard",
-    description: "Criar mockups e protótipos do painel principal",
-    tag: "Média",
-    createdAt: new Date("2024-01-16"),
-    completed: true,
-  },
-  {
-    id: "3",
-    title: "Configurar CI/CD",
-    description: "Implementar pipeline de integração contínua",
-    tag: "Urgente",
-    createdAt: new Date("2024-01-17"),
-    completed: false,
-  },
-]);
+// Computed tasks from store
+const tasks = computed(() => tasksStore.getTasks);
 
 // Computed
 const filteredTasks = computed(() => {
@@ -411,35 +399,38 @@ const formatDate = (date: Date) => {
   });
 };
 
-const toggleTaskStatus = (task: TaskItem & { completed: boolean }) => {
+const toggleTaskStatus = async (task: TaskItem) => {
   task.completed = !task.completed;
+  await updateTask(task);
 };
 
-const editTask = (task: TaskItem & { completed: boolean }) => {
+const editTask = (task: TaskItem) => {
   editingTask.value = { ...task };
   taskForm.value = {
+    id: task.id,
     title: task.title,
     description: task.description,
     tag: task.tag,
+    completed: false,
+    createdAt: task.createdAt,
+    updatedAt: new Date(),
   };
   showAddTask.value = true;
 };
 
-const saveTask = () => {
+const saveTask = async () => {
   if (editingTask.value) {
-    // Update existing task
-    const index = tasks.value.findIndex((t) => t.id === editingTask.value!.id);
-    if (index !== -1) {
-      tasks.value[index] = {
-        ...tasks.value[index],
-        title: taskForm.value.title,
-        description: taskForm.value.description,
-        tag: taskForm.value.tag,
-      } as TaskItem & { completed: boolean };
-    }
+    const updatedTask = {
+      ...editingTask.value,
+      title: taskForm.value.title,
+      description: taskForm.value.description,
+      tag: taskForm.value.tag,
+      updatedAt: taskForm.value.updatedAt,
+    } as TaskItem;
+
+    await updateTask(updatedTask);
   } else {
-    // Create new task
-    const newTask: TaskItem & { completed: boolean } = {
+    const newTask: TaskItem = {
       id: nanoid(),
       title: taskForm.value.title,
       description: taskForm.value.description,
@@ -447,17 +438,23 @@ const saveTask = () => {
       createdAt: new Date(),
       completed: false,
     };
-    tasks.value.unshift(newTask);
+
+    await createTask(newTask);
   }
 
   closeModal();
 };
 
-const deleteTask = (taskId: string) => {
+const removeTask = async (taskId: string) => {
   if (confirm("Tem certeza que deseja excluir esta tarefa?")) {
-    const index = tasks.value.findIndex((t) => t.id === taskId);
-    if (index !== -1) {
-      tasks.value.splice(index, 1);
+    try {
+      const currentTasks = tasksStore.getTasks;
+      const filteredTasks = currentTasks.filter((t) => t.id !== taskId);
+      tasksStore.SET_TASKS(filteredTasks);
+
+      await deleteTask(taskId);
+    } catch (error: any) {
+      throw new Error(error);
     }
   }
 };
@@ -466,16 +463,21 @@ const closeModal = () => {
   showAddTask.value = false;
   editingTask.value = null;
   taskForm.value = {
+    id: "",
     title: "",
     description: "",
     tag: "Nova",
+    completed: false,
+    createdAt: new Date(),
   };
 };
 
 // Load animation on client side
-onMounted(() => {
+onMounted(async () => {
   import("~/assets/animations/empty-state.json").then((module) => {
     animationEmptyState.value = module.default;
   });
+
+  await getTasks();
 });
 </script>
