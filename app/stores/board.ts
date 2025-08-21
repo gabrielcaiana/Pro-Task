@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import type { IBoard } from "~/types/board";
 
-export const useBoardStore = defineStore({
-  id: "board",
+export const useBoardStore = defineStore("board", {
   state: () => ({
     boards: null as IBoard[] | null,
     selectedBoard: null as IBoard | null,

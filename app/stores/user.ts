@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import type { IUser } from "~/types/authentication";
 
-export const useUserStore = defineStore({
-  id: "user",
+export const useUserStore = defineStore("user", {
   state: () => ({
     user: {
       id: "",

@@ -51,13 +51,13 @@ const clearFilters = () => {
         <span
           v-if="filterActive"
           id="badge-dismiss-default"
-          class="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded"
+          class="inline-flex items-center px-2 py-1 mr-2 text-sm font-medium text-purple-800 bg-purple-100 rounded"
           @click="clearFilters"
         >
           Limpar filtros
           <button
             type="button"
-            class="inline-flex items-center p-1 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900"
+            class="inline-flex items-center p-1 text-sm text-purple-400 bg-transparent rounded-sm hover:bg-purple-200 hover:text-purple-900"
             data-dismiss-target="#badge-dismiss-default"
             aria-label="Remove"
           >
@@ -106,7 +106,7 @@ const clearFilters = () => {
                 id="default-search"
                 v-model="filteredTask"
                 type="search"
-                class="block w-full p-4 pl-10 h-[38px] text-sm text-gray-900 border-none rounded-[6px] bg-neutral-200 focus:ring-blue-500 focus:border-blue-500 placeholder:text-neutral"
+                class="block w-full p-4 pl-10 h-[38px] text-sm text-gray-900 border-none rounded-[6px] bg-neutral-200 focus:ring-purple-500 focus:border-purple-500 placeholder:text-neutral"
                 placeholder="Buscar por uma tarefa."
                 required
               />
@@ -114,7 +114,7 @@ const clearFilters = () => {
 
             <button
               type="submit"
-              class="text-white bg-neutral-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 h-[38px]"
+              class="text-white bg-neutral-900 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 h-[38px]"
             >
               Atualizar
             </button>
@@ -150,6 +150,13 @@ const clearFilters = () => {
             aria-labelledby="dropdownDefaultButton"
           >
             <li>
+              <nuxt-link
+                class="flex items-center px-4 py-2 hover:bg-gray-100 gap-1"
+                to="tasks"
+              >
+                <Icon name="tabler:align-box-right-stretch" size="16" />
+                Tasks
+              </nuxt-link>
               <a
                 href="#"
                 class="flex items-center px-4 py-2 hover:bg-gray-100 gap-1"
