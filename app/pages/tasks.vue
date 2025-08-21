@@ -450,15 +450,11 @@ const saveTask = async () => {
 
 const removeTask = async (taskId: string) => {
   if (confirm("Tem certeza que deseja excluir esta tarefa?")) {
-    try {
-      const currentTasks = tasksStore.getTasks;
-      const filteredTasks = currentTasks.filter((t) => t.id !== taskId);
-      tasksStore.SET_TASKS(filteredTasks);
+    const currentTasks = tasksStore.getTasks;
+    const filteredTasks = currentTasks.filter((t) => t.id !== taskId);
+    tasksStore.SET_TASKS(filteredTasks);
 
-      await deleteTask(taskId);
-    } catch (error: any) {
-      throw new Error(error);
-    }
+    await deleteTask(taskId);
   }
 };
 
