@@ -78,7 +78,10 @@
         <div
           v-for="task in filteredTasks"
           :key="task.id"
-          class="bg-neutral-100 rounded-[16px] p-6 hover:shadow-md transition-shadow"
+          class="bg-neutral-100 border rounded-[16px] p-6 hover:shadow-md transition-shadow"
+          :class="{
+            'border-purple-500 border-2 opacity-50': task.completed,
+          }"
         >
           <div class="flex items-start gap-4">
             <!-- Checkbox -->
