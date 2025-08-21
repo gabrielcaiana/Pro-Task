@@ -287,7 +287,7 @@
           <div class="flex justify-end gap-3 mt-8">
             <button
               type="button"
-              class="focus:outline-none text-purple border border-bg-purple hover:border-purple transition-colors focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+              class="focus:outline-none text-purple border border-purple hover:border-purple transition-colors focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
               @click="closeModal"
             >
               Cancelar
