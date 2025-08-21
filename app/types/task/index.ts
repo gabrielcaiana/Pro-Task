@@ -5,5 +5,5 @@ export interface TaskItem {
   title: string;
   description: string;
   tag: string;
-  completed?: boolean;
+  completed: boolean;
 }
