@@ -2,6 +2,7 @@
 import HoneybadgerSourceMapPlugin from "@honeybadger-io/rollup-plugin";
 
 export default defineNuxtConfig({
+  ssr: false,
   future: {
     compatibilityVersion: 4,
   },
@@ -49,6 +50,15 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "nuxt-vuefire",
+    "nuxt-icon",
+    "@vite-pwa/nuxt",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+  ],
 
   imports: {
     dirs: ["stores"],
