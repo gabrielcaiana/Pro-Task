@@ -135,6 +135,11 @@ export default () => {
       await updateDoc(taskRef, mergeTask);
       UPDATE_TASK(mergeTask as TaskItem);
     } catch (error) {
+      $bus.$emit("ui:toast", {
+        message: "Falha ao atualizar a task",
+        show: true,
+        type: "danger",
+      });
     } finally {
       FINISH_LOADING();
     }
